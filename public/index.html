@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="notranslate" translate="no" lang="en">
+<head>
+  <meta name="google" content="notranslate">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TraktiRie — Sell, take tips & open commissions</title>
+  <meta name="description" content="TraktiRie helps content creators sell digital products, accept donations, and offer open commissions — all from one simple link." />
+  <meta name="keywords" content="TraktiRie, creator platform, digital shop, open commission, tips, link in bio, content creator tools" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4a6f0',400:'#c084fc',500:'#a855f7',600:'#7c3aed',700:'#6d28d9',800:'#5b21b6',900:'#3b1f6b' },
+            accent: { 400:'#a78bfa',500:'#8b5cf6',600:'#7c3aed' },
+            slate: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#6b5b95',600:'#4c2f85',700:'#2d1b54',800:'#120c22',900:'#0c0818',950:'#05030c' },
+            sky: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed',900:'#3b1f6b' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05030c">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-white font-sans antialiased">
+  <!-- Navbar -->
+  <nav class="fixed top-0 inset-x-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center font-bold text-lg">T</div>
+          <span class="text-xl font-bold tracking-tight">Trakti<span class="text-sky-400">Rie</span></span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <a href="#features" class="hover:text-white transition">Features</a>
+          <a href="#how" class="hover:text-white transition">How it works</a>
+          <a href="#pricing" class="hover:text-white transition">Pricing</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="/login" class="text-sm font-medium text-slate-300 hover:text-white transition hidden sm:block">Log in</a>
+          <a href="/signup" class="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 text-sm font-semibold hover:opacity-90 transition shadow-lg shadow-sky-500/20">Sign up free</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-900/40 via-slate-950 to-slate-950"></div>
+    <div class="absolute top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-sky-500/20 blur-[120px] rounded-full"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-sky-300 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Trusted by 150+ creators
+      </div>
+      
+      <h1 class="text-[30px] sm:text-[42px] md:text-5xl font-bold tracking-tight leading-[1.1] max-w-[18ch] sm:max-w-2xl mx-auto">
+        Monetize your work<br>
+        <span class="bg-gradient-to-r from-sky-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">without the hassle</span>
+      </h1>
+
+      <p class="mt-4 sm:mt-5 text-[15px] sm:text-base leading-relaxed text-slate-400 max-w-[42ch] sm:max-w-[52ch] mx-auto">
+        One simple page for content creators to sell digital products, take tips & donations, and open commissions.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="/signup" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-base hover:opacity-90 transition shadow-xl shadow-sky-500/25">
+          Get started free
+        </a>
+        <a href="#features" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-white/5 border border-white/10 font-semibold text-base hover:bg-white/10 transition">
+          See features
+        </a>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-slate-500 text-sm">
+        <span class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> QRIS & e-wallet payments</span>
+        <span class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Only 5% fee</span>
+        <span class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Fast payouts</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold">Everything you need to get paid</h2>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto">Your audience is ready to support you. We just make it easy for them.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Support -->
+        <div class="group relative p-8 rounded-3xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-sky-500/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-sky-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+            <svg class="w-7 h-7 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Support & Tips</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">Let fans send tips and donations to support your work. Simple, direct, and personal.</p>
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex items-center gap-2"><span class="text-sky-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> One-click tips</li>
+            <li class="flex items-center gap-2"><span class="text-sky-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Message from supporters</li>
+            <li class="flex items-center gap-2"><span class="text-sky-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Public support board</li>
+          </ul>
+        </div>
+
+        <!-- Shop -->
+        <div class="group relative p-8 rounded-3xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-violet-500/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-violet-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+            <svg class="w-7 h-7 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Digital Shop</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">Sell digital products, files, templates, presets, e-books or anything downloadable. Buyers get instant access.</p>
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex items-center gap-2"><span class="text-violet-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Instant delivery</li>
+            <li class="flex items-center gap-2"><span class="text-violet-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Set your own prices</li>
+            <li class="flex items-center gap-2"><span class="text-violet-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Clean product cards</li>
+          </ul>
+        </div>
+
+        <!-- LinkBio + Commission -->
+        <div class="group relative p-8 rounded-3xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-fuchsia-500/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-fuchsia-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+            <svg class="w-7 h-7 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">LinkBio & Commissions</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">One link for everything. Plus open commissions so people can order custom work from you.</p>
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex items-center gap-2"><span class="text-fuchsia-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Custom design & themes</li>
+            <li class="flex items-center gap-2"><span class="text-fuchsia-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Open / closed toggle</li>
+            <li class="flex items-center gap-2"><span class="text-fuchsia-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Multiple service types</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="py-24 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold">Get started in a few minutes</h2>
+        <p class="mt-4 text-slate-400">No complicated setup. Just create, customize, and share.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+          <h3 class="font-semibold text-lg mb-2">Create your account</h3>
+          <p class="text-slate-400 text-sm">Sign up, set your username, and jump straight into the dashboard.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-violet-500/20 text-violet-400 flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+          <h3 class="font-semibold text-lg mb-2">Turn on what you need</h3>
+          <p class="text-slate-400 text-sm">Enable Support, Shop, LinkBio, or Open Commission. Tweak the look however you like.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+          <h3 class="font-semibold text-lg mb-2">Share your link</h3>
+          <p class="text-slate-400 text-sm">Put it in your bio. Fans can tip, buy, or request commissions right away.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="py-24">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">Simple pricing</h2>
+      <p class="text-slate-400 mb-10">No monthly fees. You only pay when you earn.</p>
+      <div class="p-8 rounded-3xl bg-gradient-to-br from-sky-500/10 to-violet-500/10 border border-white/10">
+        <div class="text-5xl font-extrabold bg-gradient-to-r from-sky-400 to-violet-400 bg-clip-text text-transparent">5%</div>
+        <p class="mt-2 text-slate-300 font-medium">per successful transaction</p>
+        <ul class="mt-8 space-y-3 text-left max-w-sm mx-auto text-sm text-slate-300">
+          <li class="flex items-center gap-3"><span class="text-emerald-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> No setup fee</li>
+          <li class="flex items-center gap-3"><span class="text-emerald-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> No monthly subscription</li>
+          <li class="flex items-center gap-3"><span class="text-emerald-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Payouts to bank or e-wallet</li>
+          <li class="flex items-center gap-3"><span class="text-emerald-400"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span> Support via WhatsApp</li>
+        </ul>
+        <a href="/signup" class="mt-8 inline-block px-8 py-3 rounded-2xl bg-white text-slate-900 font-semibold hover:bg-slate-100 transition">Get started free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to turn your work into income?</h2>
+      <p class="text-slate-400 mb-8">Join creators who already use TraktiRie to sell, take tips, and open commissions.</p>
+      <a href="/signup" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-lg hover:opacity-90 transition shadow-xl shadow-sky-500/25">
+        Sign up free
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center font-bold text-sm">T</div>
+          <span class="font-bold">Trakti<span class="text-sky-400">Rie</span></span>
+        </div>
+        <div class="flex gap-6 text-sm text-slate-400">
+          <a href="/support" class="hover:text-white">Support</a>
+          <a href="/signup" class="hover:text-white">Get started</a>
+        </div>
+        <p class="text-sm text-slate-500">© 2026 TraktiRie — All rights reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

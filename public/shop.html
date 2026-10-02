@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="notranslate" translate="no" lang="en">
+<head>
+  <meta name="google" content="notranslate">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — TraktiRie</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#6b5b95',600:'#4c2f85',700:'#2d1b54',800:'#120c22',900:'#0c0818',950:'#05030c' },
+            sky: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed',900:'#3b1f6b' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05030c">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
+    }
+  </script>
+</head>
+<body class="font-sans antialiased min-h-screen" style="background:#05030c;color:#fff">
+  <nav class="border-b sticky top-0 z-40" style="border-color:var(--tr-card-border);background:color-mix(in srgb, var(--tr-bg) 85%, transparent);backdrop-filter:blur(12px)">
+    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background:linear-gradient(135deg,var(--tr-primary),var(--tr-primary-end))">T</div>
+        <span class="font-bold">Trakti<span style="color:var(--tr-primary)">Rie</span></span>
+      </a>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="/dashboard" style="color:var(--tr-text-muted)">Dashboard</a>
+        <a href="/support" style="color:var(--tr-text-muted)">Donation</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-4 py-10">
+    <div id="storeLoading" class="text-center py-16" style="color:var(--tr-text-muted)">Loading store...</div>
+
+    <div id="storeNotFound" class="hidden text-center py-16">
+      <p class="mb-3 flex justify-center text-slate-400"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></p>
+      <h1 class="text-xl font-bold">Store not found</h1>
+      <p class="text-sm mt-2" style="color:var(--tr-text-muted)">Check the store slug or add products from the dashboard.</p>
+    </div>
+
+    <div id="storeContent" class="hidden">
+      <div class="text-center mb-10">
+        <div class="avatar-ring w-20 h-20 mx-auto mb-3">
+          <img id="storeAvatar" src="" alt="Avatar" class="w-full h-full rounded-full" style="background:var(--tr-bg-secondary)">
+        </div>
+        <h1 id="storeTitle" class="text-2xl font-bold">Shop</h1>
+        <p id="storeTagline" class="text-sm mt-1" style="color:var(--tr-text-muted)"></p>
+        <div id="catNav" class="flex flex-wrap justify-center gap-2 mt-4 text-xs"></div>
+      </div>
+      <div id="productGrid" class="product-grid-1x2"></div>
+    </div>
+  </main>
+
+  
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="glass rounded-3xl p-6 w-full max-w-sm text-center relative" style="background:var(--tr-bg-secondary,#120c22)">
+      <h3 class="text-lg font-bold mb-1">Scan QR to pay</h3>
+      <p class="text-sm mb-4" style="color:var(--tr-text-muted)">Amount: <span id="modalAmount" class="font-semibold" style="color:var(--tr-text)">Rp0</span></p>
+      <div id="qrContainer" class="qr-box mx-auto mb-4"></div>
+      <p class="text-xs mb-4" style="color:var(--tr-text-muted)">Transaction ID: <span id="trxId" class="font-mono">-</span></p>
+      <div id="statusResult" class="hidden text-sm mb-3"></div>
+      <div class="flex gap-2">
+        <button id="checkStatusBtn" class="flex-1 py-2.5 rounded-xl text-sm font-medium border" style="border-color:var(--tr-card-border);background:var(--tr-card-bg)">Check status</button>
+        <button id="closeModalBtn" class="flex-1 py-2.5 rounded-xl text-sm font-medium" style="background:var(--tr-bg)">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delivery Modal — link download setelah bayar (model Sociabuzz / jual preset) -->
+  <div id="deliveryModal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="glass rounded-3xl p-6 w-full max-w-sm relative" style="background:var(--tr-bg-secondary,#120c22)">
+      <div class="text-center mb-4">
+        <div class="w-14 h-14 mx-auto mb-3 rounded-2xl flex items-center justify-center text-2xl" style="background:rgba(16,185,129,0.15)">✅</div>
+        <h3 class="text-lg font-bold">Payment Success</h3>
+        <p id="deliveryProductName" class="text-sm mt-1" style="color:var(--tr-text-muted)">Product</p>
+      </div>
+      <div class="rounded-2xl p-4 mb-4 text-left text-sm" style="background:rgba(255,255,255,0.04);border:1px solid var(--tr-card-border)">
+        <p class="text-xs mb-2" style="color:var(--tr-text-muted)">Link download kamu:</p>
+        <a id="deliveryLink" href="#" target="_blank" rel="noopener"
+          class="block break-all font-medium underline" style="color:var(--tr-primary)">https://...</a>
+        <p id="deliveryNote" class="text-xs mt-3" style="color:var(--tr-text-muted)"></p>
+      </div>
+      <div class="flex gap-2">
+        <a id="deliveryOpenBtn" href="#" target="_blank" rel="noopener"
+          class="flex-1 py-3 rounded-2xl text-sm font-semibold text-center"
+          style="background:linear-gradient(135deg,var(--tr-primary),var(--tr-primary-end));color:var(--tr-button-text)">
+          Open Link
+        </a>
+        <button type="button" id="deliveryCloseBtn" class="flex-1 py-3 rounded-2xl text-sm font-medium border"
+          style="border-color:var(--tr-card-border)">Cancel</button>
+      </div>
+      <p class="text-[11px] text-center mt-3" style="color:var(--tr-text-muted)">Save link ini. Bisa dibuka lagi dari riwayat device ini.</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/backend-config.js"></script>
+  <script src="js/backend-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/theme-engine.js"></script>
+  <script src="js/store-data.js"></script>
+  <script src="js/payment.js"></script>
+  <script>
+    // Product yang sedang dibayar — dipakai setelah status paid
+    window.__pendingShopProduct = null;
+
+    function showToastLocal(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + (type || 'success') + ' show';
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    function showDeliveryModal(product) {
+      if (!product) return;
+      const link = product.downloadLink || product.link || '';
+      const modal = document.getElementById('deliveryModal');
+      document.getElementById('deliveryProductName').textContent = product.name || 'Product digital';
+      const a = document.getElementById('deliveryLink');
+      const btn = document.getElementById('deliveryOpenBtn');
+      if (link) {
+        a.href = link;
+        a.textContent = link;
+        btn.href = link;
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+      } else {
+        a.href = '#';
+        a.textContent = '(Download link not set by creator — contact the seller)';
+        btn.href = '#';
+        btn.classList.add('opacity-50', 'pointer-events-none');
+      }
+      const note = document.getElementById('deliveryNote');
+      note.textContent = product.deliveryNote || (product.type === 'link' ? 'File digital · buka link di atas untuk download' : '');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      // tutup payment modal
+      const pay = document.getElementById('paymentModal');
+      if (pay) {
+        pay.classList.add('hidden');
+        pay.classList.remove('flex');
+      }
+    }
+
+    document.getElementById('deliveryCloseBtn').addEventListener('click', function () {
+      const modal = document.getElementById('deliveryModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    });
+
+    // Hook: setelah bayar sukses (payment.js cek status demo/paid)
+    const _origCheck = document.getElementById('checkStatusBtn');
+    if (_origCheck) {
+      _origCheck.addEventListener('click', function () {
+        // delay sedikit biar payment.js selesai update UI
+        setTimeout(function () {
+          const el = document.getElementById('statusResult');
+          const ok = el && !el.classList.contains('hidden') && /berhasil/i.test(el.textContent || '');
+          if (ok && window.__pendingShopProduct) {
+            const prod = window.__pendingShopProduct;
+            if (window.TraktiRieStore && TraktiRieStore.savePurchase) {
+              TraktiRieStore.savePurchase({
+                code: prod.code,
+                name: prod.name,
+                price: prod.price,
+                downloadLink: prod.downloadLink || prod.link || '',
+                store: TraktiRieStore.getStoreSlugFromUrl()
+              });
+            }
+            showDeliveryModal(prod);
+            window.__pendingShopProduct = null;
+          }
+        }, 400);
+      });
+    }
+
+    async function buyProduct(product, btn) {
+      btn.disabled = true;
+      btn.textContent = '...';
+      window.__pendingShopProduct = product;
+      const orderId = 'SHOP-' + product.code + '-' + Date.now().toString(36).toUpperCase();
+      try {
+        if (typeof createPayment === 'function') {
+          await createPayment(orderId, product.price);
+        } else {
+          showToastLocal('Payment module belum siap', 'error');
+        }
+      } catch (e) {
+        showToastLocal('Failed to create payment', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Buy';
+      }
+    }
+
+    function renderProductCard(product, index, theme) {
+      const wrap = document.createElement('div');
+      wrap.className = 'tr-card overflow-hidden group';
+      if (!theme.cardHover) wrap.style.transition = 'none';
+
+      const gradA = theme.primary || '#a855f7';
+      const gradB = theme.primaryEnd || '#7c3aed';
+      const isLink = (product.type || 'link') === 'link' || !!product.downloadLink;
+      wrap.innerHTML =
+        '<div class="h-40 flex items-center justify-center relative" style="background:linear-gradient(135deg,' + gradA + '33,' + gradB + '33)">' +
+          '<span class="flex items-center justify-center" style="color:var(--tr-primary)">' + (window.TraktiRieIcons ? TraktiRieIcons.svg(product.icon || product.emoji || 'box', 'w-12 h-12') : '') + '</span>' +
+          (isLink ? '<span class="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full font-medium" style="background:rgba(168,85,247,0.25);color:var(--tr-primary)">LINK DOWNLOAD</span>' : '') +
+        '</div>' +
+        '<div class="p-5">' +
+          '<h3 class="font-semibold"></h3>' +
+          '<p class="text-sm mt-1" style="color:var(--tr-text-muted)"></p>' +
+          '<div class="flex items-center justify-between mt-4">' +
+            '<span class="font-bold" style="color:var(--tr-primary)">Rp' + Number(product.price).toLocaleString('id-ID') + '</span>' +
+            '<button class="px-4 py-2 text-sm font-semibold transition hover:opacity-90" style="background:linear-gradient(135deg,var(--tr-primary),var(--tr-primary-end));color:var(--tr-button-text);border-radius:calc(var(--tr-card-radius) * 0.6)">Buy</button>' +
+          '</div>' +
+        '</div>';
+      wrap.querySelector('h3').textContent = product.name;
+      wrap.querySelector('p').textContent = product.desc || '';
+      wrap.querySelector('button').addEventListener('click', function(e) {
+        buyProduct(product, e.currentTarget);
+      });
+      return wrap;
+    }
+
+    async function loadStore() {
+      const slug = TraktiRieStore.getStoreSlugFromUrl();
+      // Theme per owner store (slug = username-ish)
+      const theme = await TraktiRieTheme.getTheme('shop', slug);
+      TraktiRieTheme.applyThemeToDocument(theme);
+
+      const store = await TraktiRieStore.getStoreBySlug(slug);
+      document.getElementById('storeLoading').classList.add('hidden');
+
+      if (!store) {
+        document.getElementById('storeNotFound').classList.remove('hidden');
+        return;
+      }
+
+      document.getElementById('storeAvatar').src =
+        'https://api.dicebear.com/7.x/avataaars/svg?seed=' + encodeURIComponent(store.avatarSeed) + '&backgroundColor=8b5cf6';
+      document.getElementById('storeTitle').textContent = 'Shop ' + store.name;
+      document.getElementById('storeTagline').textContent = store.tagline || '';
+
+      const grid = document.getElementById('productGrid');
+      grid.className = theme.productLayout === '1x1' ? 'product-grid-1x1' : 'product-grid-1x2';
+      grid.innerHTML = '';
+      (store.products || []).forEach(function(p, i) {
+        grid.appendChild(renderProductCard(p, i, theme));
+      });
+
+      document.getElementById('storeContent').classList.remove('hidden');
+      document.title = 'Shop ' + store.name + ' — TraktiRie';
+      var nav = document.getElementById('catNav');
+      if (nav && window.TraktiRieRouter) {
+        var user = slug;
+        var lbCfg = null;
+        try { lbCfg = await TraktiRieTheme.getLinkBioConfig(user); } catch (e) {}
+        TraktiRieRouter.renderCatNav(nav, user, 'shop', lbCfg);
+      }
+    }
+
+    loadStore();
+  </script>
+</body>
+</html>

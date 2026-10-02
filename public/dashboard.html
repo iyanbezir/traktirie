@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html class="notranslate" translate="no" lang="en">
+<head>
+  <meta name="google" content="notranslate">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TraktiRie — Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 400:'#c084fc',500:'#a855f7' }, accent: { 400:'#a78bfa',500:'#8b5cf6' },
+            slate: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#6b5b95',600:'#4c2f85',700:'#2d1b54',800:'#120c22',900:'#0c0818',950:'#05030c' },
+            sky: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed',900:'#3b1f6b' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05030c">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-white font-sans antialiased min-h-screen">
+  <div class="flex min-h-screen">
+    <aside class="hidden lg:flex flex-col w-64 border-r border-white/5 bg-slate-900/50 p-4 sticky top-0 h-screen">
+      <a href="/" class="flex items-center gap-2 px-2 mb-8">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center font-bold">T</div>
+        <span class="font-bold text-lg">Trakti<span class="text-sky-400">Rie</span></span>
+      </a>
+      <nav class="flex-1 space-y-1 text-sm">
+        <a href="#overview" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5 text-white font-medium" data-tab="overview">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Overview
+        </a>
+        <a href="#commission" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition" data-tab="commission">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Open Commission
+        </a>
+        <a href="#wa" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition" data-tab="wa">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          WA Assistant
+        </a>
+        <a href="#saldo" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition" data-tab="saldo">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M13 12h8m0 0l-3-3m3 3l-3 3"/></svg>
+          Balance
+        </a>
+        <a href="#theme" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition" data-tab="theme">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          Theme Studio
+        </a>
+        <a href="#" data-public-page="support" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Support / Donation
+        </a>
+        <a href="#" data-public-page="shop" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          Shop
+        </a>
+        <a href="#" data-public-page="linkbio" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          LinkBio
+        </a>
+      </nav>
+      <button onclick="SWAuth.logout()" class="mt-auto flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition text-sm">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Log out
+      </button>
+    </aside>
+
+    <div class="flex-1">
+      <header class="lg:hidden border-b border-white/5 px-4 h-14 flex items-center justify-between sticky top-0 bg-slate-950/80 backdrop-blur z-30">
+        <span class="font-bold">Dashboard</span>
+        <button onclick="SWAuth.logout()" class="text-sm text-slate-400">Log out</button>
+      </header>
+
+      <main class="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
+        <section id="tab-overview" class="tab-content">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h1 class="text-2xl font-bold">Hey, <span id="displayName">Creator</span></h1>
+              <p class="text-slate-400 text-sm mt-1">Manage your shop, commissions, tips, and wallet from here.</p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <a href="#" data-public-page="commission" target="_blank" class="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 transition">View commission page</a>
+              <button id="quickToggleComm" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 text-sm font-semibold hover:opacity-90 transition">Toggle Open/Closed</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="glass rounded-2xl p-5 cursor-pointer" onclick="document.querySelector('[data-tab=saldo]').click()">
+              <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Balance</p>
+              <p class="text-2xl font-bold mt-1 text-emerald-400" id="overviewBalance">Rp0</p>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Commission orders</p>
+              <p class="text-2xl font-bold mt-1" id="orderCount">0</p>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Commission status</p>
+              <p class="text-2xl font-bold mt-1" id="commStatusLabel">CLOSED</p>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">WA Bot</p>
+              <p class="text-2xl font-bold mt-1" id="waStatusLabel">OFF</p>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/5">
+              <h2 class="font-semibold">Recent commission orders</h2>
+            </div>
+            <div id="recentOrders" class="divide-y divide-white/5">
+              <p class="px-5 py-8 text-center text-slate-500 text-sm">No orders yet</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="tab-commission" class="tab-content hidden">
+          <h1 class="text-2xl font-bold mb-2">Open Commission</h1>
+          <p class="text-slate-400 text-sm mb-8">Set status, service types, and commission prices.</p>
+
+          <div class="glass rounded-2xl p-6 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Commission status</h3>
+              <p class="text-sm text-slate-400 mt-1">When OPEN, the public page can accept orders</p>
+            </div>
+            <button id="toggleCommBtn" class="px-6 py-3 rounded-xl font-semibold text-sm transition"></button>
+          </div>
+
+          <div class="glass rounded-2xl p-6 space-y-5 mb-6">
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">Page title</label>
+              <input type="text" id="commTitle" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none" placeholder="Open Commission">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">Deskripsi</label>
+              <textarea id="commDesc" rows="2" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none resize-none" placeholder="Saya sedang open commission..."></textarea>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <label class="text-sm font-medium text-slate-300">Commission types</label>
+                <button type="button" id="addTypeBtn" class="text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">+ Add</button>
+              </div>
+              <div id="typesEditor" class="space-y-3"></div>
+            </div>
+            <button id="saveCommBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold hover:opacity-90 transition">Save Settings</button>
+          </div>
+          <div class="text-center">
+            <a href="#" data-public-page="commission" target="_blank" class="text-sky-400 text-sm hover:underline">Open public commission page →</a>
+          </div>
+        </section>
+
+        <section id="tab-wa" class="tab-content hidden">
+          <h1 class="text-2xl font-bold mb-2">WA Assistant</h1>
+          <p class="text-slate-400 text-sm mb-8">Connect WhatsApp via pairing code. The bot sends notifications automatically when there is a new commission order.</p>
+
+          <div class="glass rounded-2xl p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold">Connection status</h3>
+              <span id="waBadge" class="text-xs px-2.5 py-1 rounded-full font-medium"></span>
+            </div>
+            <p class="text-sm text-slate-400" id="waInfo">Not connected yet</p>
+          </div>
+
+          <div id="pairingSection" class="glass rounded-2xl p-6 space-y-5">
+            <div>
+              <h3 class="font-semibold mb-1">1. Generate Pairing Code</h3>
+              <p class="text-sm text-slate-400 mb-4">Click the button below, then enter the code in WhatsApp (Linked Devices → Link with phone number).</p>
+              <button id="genPairBtn" class="px-5 py-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 font-semibold text-sm hover:bg-emerald-500/30 transition">Generate Pairing Code</button>
+            </div>
+            <div id="pairingCodeBox" class="hidden">
+              <p class="text-sm text-slate-400 mb-2">Pairing code (valid ~1 minute):</p>
+              <div class="flex items-center gap-3">
+                <span id="pairingCodeDisplay" class="text-3xl font-mono font-bold tracking-[0.3em] text-sky-400"></span>
+                <button id="copyCodeBtn" class="text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20">Copy</button>
+              </div>
+              <p class="text-xs text-slate-500 mt-3">On your phone: WhatsApp → Settings → Linked Devices → Link a Device → Link with phone number instead → enter the code.</p>
+            </div>
+            <div id="confirmPairBox" class="hidden border-t border-white/10 pt-5">
+              <h3 class="font-semibold mb-1">2. Confirm Pairing</h3>
+              <p class="text-sm text-slate-400 mb-3">After it succeeds on your phone, enter the paired WhatsApp number:</p>
+              <div class="flex gap-3">
+                <input type="tel" id="pairPhone" placeholder="628xxxxxxxxxx" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none text-sm">
+                <button id="confirmPairBtn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-sm hover:opacity-90">Confirm</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="connectedSection" class="hidden glass rounded-2xl p-6 space-y-4">
+            <p class="text-sm text-emerald-400">Bot connected. Every new commission order will be sent automatically to this number.</p>
+            <button id="disconnectWA" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/30 transition">Disconnect</button>
+          </div>
+
+          <div class="glass rounded-2xl p-6 mt-6">
+            <h3 class="font-semibold mb-3">Sample notification message</h3>
+            <pre class="text-xs text-slate-300 bg-slate-900 rounded-xl p-4 whitespace-pre-wrap leading-relaxed" id="msgPreview"></pre>
+          </div>
+        </section>
+        <section id="tab-saldo" class="tab-content hidden">
+          <h1 class="text-2xl font-bold mb-2">Balance</h1>
+          <p class="text-slate-400 text-sm mb-8">Top up, withdraw, and view your transaction history.</p>
+
+          <div class="glass rounded-2xl p-6 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Your balance</p>
+              <p class="text-3xl font-bold mt-1 text-emerald-400" id="saldoBalance">Rp0</p>
+            </div>
+            <button id="openTopupBtn" class="px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-sm hover:opacity-90 transition">+ Top Up Balance</button>
+          </div>
+
+          <div class="glass rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-1">Withdraw Balance</h3>
+            <p class="text-sm text-slate-400 mb-5">Minimum withdrawal Rp5,000. A fixed admin fee applies to every withdrawal.</p>
+
+            <div class="flex gap-2 mb-4" id="wdTypeToggle">
+              <button type="button" data-type="ewallet" class="wd-type-btn flex-1 py-2.5 rounded-xl text-sm font-medium bg-white/10 border border-sky-500/50 text-white transition">E-Wallet</button>
+              <button type="button" data-type="bank" class="wd-type-btn flex-1 py-2.5 rounded-xl text-sm font-medium bg-white/5 text-slate-400 transition">Bank</button>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Channel</label>
+                <select id="wdChannel" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none"></select>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-1.5">Destination number</label>
+                  <input type="text" id="wdAccountNumber" placeholder="08xxxxxxxxxx / No. Rekening" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-1.5">Name Pemilik</label>
+                  <input type="text" id="wdAccountName" placeholder="Sesuai nama akun/rekening" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Amount Withdraw</label>
+                <input type="number" id="wdAmount" placeholder="Minimal 5000" min="5000" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+              </div>
+              <div class="flex justify-between text-sm text-slate-400 px-1">
+                <span>Admin fee</span>
+                <span id="wdFeeLabel">—</span>
+              </div>
+              <div class="flex justify-between text-sm font-semibold px-1">
+                <span>Total deducted from balance</span>
+                <span id="wdTotalLabel">—</span>
+              </div>
+              <button id="submitWdBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold hover:opacity-90 transition">Request withdrawal</button>
+              <p class="text-xs text-slate-500">Withdrawal status: <b>pending</b> — waiting for admin review.</p>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl overflow-hidden mb-6">
+            <div class="px-5 py-4 border-b border-white/5">
+              <h2 class="font-semibold">Withdrawal history</h2>
+            </div>
+            <div id="withdrawalHistory" class="divide-y divide-white/5">
+              <p class="px-5 py-8 text-center text-slate-500 text-sm">No withdrawals yet</p>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/5">
+              <h2 class="font-semibold">Transaction history</h2>
+            </div>
+            <div id="walletHistory" class="divide-y divide-white/5">
+              <p class="px-5 py-8 text-center text-slate-500 text-sm">No transactions yet</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="tab-theme" class="tab-content hidden">
+          <div class="mb-6">
+            <h1 class="text-2xl font-bold">Theme Studio</h1>
+            <p class="text-slate-400 text-sm mt-1">Customize LinkBio & Shop: colors, background, buttons, card layout. Export/import themes to share.</p>
+          </div>
+
+          <!-- Target switcher -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            <button type="button" id="themeTargetLinkbio" class="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 text-sm font-semibold">LinkBio</button>
+            <button type="button" id="themeTargetShop" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10">Shop</button>
+          </div>
+
+          <!-- Preset themes -->
+          <div class="glass rounded-2xl p-5 mb-6">
+            <h2 class="font-semibold mb-3">Default themes</h2>
+            <div class="grid sm:grid-cols-3 gap-3" id="presetThemes"></div>
+          </div>
+
+          <!-- Color & style editor -->
+          <div class="grid lg:grid-cols-2 gap-6 mb-6">
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <h2 class="font-semibold">Colors & background</h2>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <label class="block">Primary
+                  <input type="color" id="thPrimary" class="w-full h-10 mt-1 rounded-lg cursor-pointer bg-transparent">
+                </label>
+                <label class="block">Primary End
+                  <input type="color" id="thPrimaryEnd" class="w-full h-10 mt-1 rounded-lg cursor-pointer bg-transparent">
+                </label>
+                <label class="block">Accent
+                  <input type="color" id="thAccent" class="w-full h-10 mt-1 rounded-lg cursor-pointer bg-transparent">
+                </label>
+                <label class="block">Background
+                  <input type="color" id="thBg" class="w-full h-10 mt-1 rounded-lg cursor-pointer bg-transparent">
+                </label>
+                <label class="block">Text
+                  <input type="color" id="thText" class="w-full h-10 mt-1 rounded-lg cursor-pointer bg-transparent">
+                </label>
+                <label class="block">Text Muted
+                  <input type="color" id="thTextMuted" class="w-full h-10 mt-1 rounded-lg cursor-pointer bg-transparent">
+                </label>
+              </div>
+              <div>
+                <label class="block text-sm mb-1">Background type</label>
+                <select id="thBgType" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm">
+                  <option value="solid">Solid</option>
+                  <option value="gradient">Gradient</option>
+                  <option value="image">Image URL</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm mb-1">Background Value (CSS / URL)</label>
+                <textarea id="thBgValue" rows="2" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm font-mono" placeholder="#05030c or linear-gradient(...) or https://..."></textarea>
+              </div>
+            </div>
+
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <h2 class="font-semibold">Buttons & layout</h2>
+              <div>
+                <label class="block text-sm mb-1">Button style (LinkBio)</label>
+                <select id="thButtonStyle" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm">
+                  <option value="rounded">Rounded (default)</option>
+                  <option value="pill">Pill (penuh bulat)</option>
+                  <option value="soft">Soft (sedikit rounded)</option>
+                </select>
+              </div>
+              <label class="flex items-center gap-2 text-sm">
+                <input type="checkbox" id="thButtonShadow" class="rounded"> Shadow tombol
+              </label>
+              <div>
+                <label class="block text-sm mb-1">Product layout (Shop)</label>
+                <select id="thProductLayout" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm">
+                  <option value="1x1">1:1 — one product per row (scroll down)</option>
+                  <option value="1x2">1:2 — two products per row</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm mb-1">Radius Card</label>
+                <select id="thCardRadius" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm">
+                  <option value="0.75rem">Kecil</option>
+                  <option value="1rem">Sedang</option>
+                  <option value="1.25rem">Default</option>
+                  <option value="1.5rem">Besar</option>
+                  <option value="2rem">Extra</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm mb-1">Theme name (for export)</label>
+                <input type="text" id="thName" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm" placeholder="My theme">
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile (LinkBio only) — like Linktree / Lynk -->
+          <div id="linkbioProfileEditor" class="glass rounded-2xl p-5 mb-6">
+            <h2 class="font-semibold mb-3">Profile</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm text-slate-400 mb-1">Display name</label>
+                <input type="text" id="pfDisplayName" maxlength="80" placeholder="Your name" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+              </div>
+              <div>
+                <label class="block text-sm text-slate-400 mb-1">Avatar URL <span class="text-slate-600">(optional)</span></label>
+                <input type="url" id="pfAvatarUrl" placeholder="https://... or leave empty for auto avatar" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-sm text-slate-400 mb-1">Bio</label>
+                <textarea id="pfBio" rows="2" maxlength="300" placeholder="Short bio for your page" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500 resize-none"></textarea>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Public pages on/off (LinkBio only) -->
+          <div id="linkbioPagesEditor" class="glass rounded-2xl p-5 mb-6">
+            <h2 class="font-semibold mb-1">Public pages</h2>
+            <p class="text-xs text-slate-500 mb-4">Only enabled pages appear as tabs on your LinkBio, Shop, Commission, and Support pages. LinkBio is always on.</p>
+            <div class="space-y-3">
+              <label class="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+                <div>
+                  <p class="font-medium text-sm">Shop</p>
+                  <p class="text-xs text-slate-500">Digital products store</p>
+                </div>
+                <input type="checkbox" id="pageShop" class="w-5 h-5 rounded accent-violet-500" checked>
+              </label>
+              <label class="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+                <div>
+                  <p class="font-medium text-sm">Commission</p>
+                  <p class="text-xs text-slate-500">Open commission orders</p>
+                </div>
+                <input type="checkbox" id="pageCommission" class="w-5 h-5 rounded accent-violet-500" checked>
+              </label>
+              <label class="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+                <div>
+                  <p class="font-medium text-sm">Support / Donation</p>
+                  <p class="text-xs text-slate-500">Tips & donation page</p>
+                </div>
+                <input type="checkbox" id="pageSupport" class="w-5 h-5 rounded accent-violet-500" checked>
+              </label>
+            </div>
+          </div>
+
+          <!-- Social links (LinkBio only) -->
+          <div id="linkbioSocialsEditor" class="glass rounded-2xl p-5 mb-6">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-semibold">Social icons</h2>
+              <button type="button" id="addSocialBtn" class="px-3 py-1.5 rounded-lg bg-white/10 text-sm hover:bg-white/15">+ Add social</button>
+            </div>
+            <div id="socialsList" class="space-y-3"></div>
+            <p class="text-xs text-slate-500 mt-3">Shown as icons under your name. Empty URL = hidden.</p>
+          </div>
+
+          <!-- Custom links (LinkBio only) -->
+          <div id="linkbioLinksEditor" class="glass rounded-2xl p-5 mb-6">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-semibold">Custom links</h2>
+              <button type="button" id="addLinkBtn" class="px-3 py-1.5 rounded-lg bg-white/10 text-sm hover:bg-white/15">+ Add link</button>
+            </div>
+            <div id="linksList" class="space-y-3"></div>
+            <p class="text-xs text-slate-500 mt-3">Order = public page order. Use ↑ ↓ to reorder. Primary = gradient button.</p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-wrap gap-3 mb-6">
+            <button type="button" id="saveThemeBtn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-sm hover:opacity-90">Save customization</button>
+            <button type="button" id="previewThemeBtn" class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10">Preview</button>
+            <button type="button" id="exportThemeBtn" class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10">Export JSON</button>
+            <label class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 cursor-pointer">
+              Import JSON
+              <input type="file" id="importThemeFile" accept=".json,application/json" class="hidden">
+            </label>
+          </div>
+
+          <div class="glass rounded-2xl p-4 text-sm text-slate-400">
+            <p><b class="text-white">Tips:</b> After saving, open <a href="#" data-public-page="linkbio" target="_blank" class="text-sky-400 hover:underline">LinkBio</a> or <a href="#" data-public-page="shop" target="_blank" class="text-sky-400 hover:underline">Shop</a> to see the result. Export/import themes to share with other creators.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Top Up Modal -->
+  <div id="topupModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 items-center justify-center p-4">
+    <div class="glass rounded-2xl p-6 w-full max-w-sm">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-semibold text-lg">Top Up Balance</h3>
+        <button id="closeTopupBtn" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div id="topupStep1">
+        <label class="block text-sm font-medium text-slate-300 mb-2">Choose amount</label>
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <button type="button" class="topup-amount-btn amount-btn py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium" data-amount="25000">25rb</button>
+          <button type="button" class="topup-amount-btn amount-btn py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium" data-amount="50000">50rb</button>
+          <button type="button" class="topup-amount-btn amount-btn py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium" data-amount="100000">100rb</button>
+        </div>
+        <input type="number" id="topupCustomAmount" placeholder="Or custom amount (min Rp10,000)" min="10000" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none mb-4">
+        <button id="createTopupBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold hover:opacity-90 transition">Create QRIS</button>
+      </div>
+
+      <div id="topupStep2" class="hidden text-center">
+        <div id="topupQrContainer" class="qr-box mb-4 mx-auto"></div>
+        <p class="text-sm text-slate-400">Amount: <span id="topupAmountLabel" class="text-white font-semibold"></span></p>
+        <p class="text-xs text-slate-500 mb-4">TRX: <span id="topupTrxId"></span></p>
+        <div id="topupStatusResult" class="hidden text-sm mb-4"></div>
+        <button id="checkTopupStatusBtn" class="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 font-medium transition mb-2">Check payment status</button>
+        <button id="backTopupBtn" class="w-full py-2.5 rounded-xl text-slate-400 text-sm hover:text-white transition">← Change amount</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/backend-config.js"></script>
+  <script src="js/backend-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/commission.js"></script>
+  <script src="js/wallet-data.js"></script>
+  <script src="js/theme-engine.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/icons.js"></script>
+  <script>
+    let currentUser = { username: 'creator' };
+
+    async function boot() {
+      if (!(await SWAuth.requireAuth())) return; // redirect handled
+      currentUser = (await SWAuth.getUser()) || { username: 'creator' };
+      document.getElementById('displayName').textContent = currentUser.displayName || currentUser.username || 'Creator';
+      // Wire public page links to this creator's username
+      (function wirePublicLinks() {
+        var u = (currentUser.username || '').replace(/^@/, '');
+        if (!u || !window.TraktiRieRouter) return;
+        document.querySelectorAll('[data-public-page]').forEach(function (a) {
+          var cat = a.getAttribute('data-public-page');
+          a.href = TraktiRieRouter.publicUrl(u, cat);
+          a.target = '_blank';
+          a.rel = 'noopener';
+        });
+      })();
+      await renderOverview();
+      try {
+        const subCheck = await SWWallet.checkMonthlySubscription();
+        if (subCheck.charged) showToast(``Store subscription fee Rp${subCheck.amount.toLocaleString('id-ID')} deducted this month``);
+      } catch (e) { console.error(e); }
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const tab = link.dataset.tab;
+        document.querySelectorAll('.nav-link').forEach(l => {
+          l.classList.remove('bg-white/5', 'text-white', 'font-medium');
+          l.classList.add('text-slate-400');
+        });
+        link.classList.add('bg-white/5', 'text-white', 'font-medium');
+        link.classList.remove('text-slate-400');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById('tab-' + tab).classList.remove('hidden');
+        if (tab === 'commission') await renderCommSettings();
+        if (tab === 'wa') await renderWA();
+        if (tab === 'overview') await renderOverview();
+        if (tab === 'saldo') await renderBalance();
+      });
+    });
+
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + type + ' show';
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    async function renderOverview() {
+      const [s, orders, wa, balance] = await Promise.all([
+        SWCommission.getCommissionSettings(),
+        SWCommission.getOrders(),
+        SWCommission.getWAConfig(),
+        SWWallet.getBalance()
+      ]);
+      document.getElementById('orderCount').textContent = orders.length;
+      document.getElementById('overviewBalance').textContent = 'Rp' + balance.toLocaleString('id-ID');
+      document.getElementById('commStatusLabel').textContent = s.isOpen ? 'OPEN' : 'CLOSED';
+      document.getElementById('commStatusLabel').className = 'text-2xl font-bold mt-1 ' + (s.isOpen ? 'text-emerald-400' : 'text-red-400');
+      document.getElementById('waStatusLabel').textContent = wa.paired ? 'ON' : 'OFF';
+      document.getElementById('waStatusLabel').className = 'text-2xl font-bold mt-1 ' + (wa.paired ? 'text-emerald-400' : 'text-slate-500');
+      const list = document.getElementById('recentOrders');
+      if (!orders.length) {
+        list.innerHTML = '<p class="px-5 py-8 text-center text-slate-500 text-sm">No orders yet</p>';
+      } else {
+        list.innerHTML = orders.slice(0, 10).map(o => `
+          <div class="px-5 py-4 flex items-center justify-between gap-3">
+            <div>
+              <p class="font-medium text-sm">${o.buyerName} · ${o.typeName}</p>
+              <p class="text-xs text-slate-500">${new Date(o.createdAt).toLocaleString('id-ID')} · ${o.buyerPhone}</p>
+              ${o.message ? '<p class="text-xs text-slate-400 mt-1 truncate max-w-xs">' + o.message + '</p>' : ''}
+            </div>
+            <div class="text-right shrink-0">
+              <p class="text-emerald-400 font-semibold text-sm">Rp${Number(o.price).toLocaleString('id-ID')}</p>
+              <span class="text-xs text-slate-500">${o.status}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    document.getElementById('quickToggleComm').addEventListener('click', async () => {
+      const s = await SWCommission.getCommissionSettings();
+      await SWCommission.toggleCommission(!s.isOpen);
+      showToast(s.isOpen ? 'Commission closed' : 'Commission opened!');
+      await renderOverview();
+    });
+
+    async function renderCommSettings() {
+      const s = await SWCommission.getCommissionSettings();
+      document.getElementById('commTitle').value = s.title || '';
+      document.getElementById('commDesc').value = s.description || '';
+      const btn = document.getElementById('toggleCommBtn');
+      if (s.isOpen) {
+        btn.textContent = '● Currently OPEN — click to close';
+        btn.className = 'px-6 py-3 rounded-xl font-semibold text-sm bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition';
+      } else {
+        btn.textContent = '● Currently CLOSED — click to open';
+        btn.className = 'px-6 py-3 rounded-xl font-semibold text-sm bg-red-500/20 text-red-400 hover:bg-red-500/30 transition';
+      }
+      const editor = document.getElementById('typesEditor');
+      editor.innerHTML = s.types.map((t, i) => `
+        <div class="flex flex-col sm:flex-row gap-2 items-start type-row" data-idx="${i}">
+          <input type="text" value="${t.name}" placeholder="Service name" class="type-name flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+          <input type="number" value="${t.price}" placeholder="Harga" class="type-price w-32 px-3 py-2 rounded-lg bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+          <input type="text" value="${t.example || ''}" placeholder="Link contoh (opsional)" class="type-example flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+          <button type="button" class="remove-type px-3 py-2 rounded-lg bg-red-500/10 text-red-400 text-sm hover:bg-red-500/20">Delete</button>
+        </div>
+      `).join('');
+      editor.querySelectorAll('.remove-type').forEach(b => b.addEventListener('click', () => b.closest('.type-row').remove()));
+    }
+
+    document.getElementById('toggleCommBtn').addEventListener('click', async () => {
+      const s = await SWCommission.getCommissionSettings();
+      await SWCommission.toggleCommission(!s.isOpen);
+      await renderCommSettings();
+      showToast(s.isOpen ? 'Commission closed' : 'Commission opened!');
+    });
+
+    document.getElementById('addTypeBtn').addEventListener('click', () => {
+      const editor = document.getElementById('typesEditor');
+      const div = document.createElement('div');
+      div.className = 'flex flex-col sm:flex-row gap-2 items-start type-row';
+      div.innerHTML = `
+        <input type="text" placeholder="Service name" class="type-name flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+        <input type="number" placeholder="Harga" value="50000" class="type-price w-32 px-3 py-2 rounded-lg bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+        <input type="text" placeholder="Link contoh (opsional)" class="type-example flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-white/10 text-sm outline-none focus:border-sky-500">
+        <button type="button" class="remove-type px-3 py-2 rounded-lg bg-red-500/10 text-red-400 text-sm hover:bg-red-500/20">Delete</button>
+      `;
+      div.querySelector('.remove-type').addEventListener('click', () => div.remove());
+      editor.appendChild(div);
+    });
+
+    document.getElementById('saveCommBtn').addEventListener('click', async () => {
+      const s = await SWCommission.getCommissionSettings();
+      s.title = document.getElementById('commTitle').value.trim() || 'Open Commission';
+      s.description = document.getElementById('commDesc').value.trim();
+      s.types = [];
+      document.querySelectorAll('.type-row').forEach((row, i) => {
+        const name = row.querySelector('.type-name').value.trim();
+        const price = parseInt(row.querySelector('.type-price').value, 10) || 0;
+        const example = row.querySelector('.type-example').value.trim();
+        if (name && price > 0) s.types.push({ id: 't' + Date.now() + i, name, price, example });
+      });
+      await SWCommission.saveCommissionSettings(s);
+      showToast('Commission settings saved!');
+      await renderOverview();
+    });
+
+    async function renderWA() {
+      const cfg = await SWCommission.getWAConfig();
+      const badge = document.getElementById('waBadge');
+      const info = document.getElementById('waInfo');
+      const pairSec = document.getElementById('pairingSection');
+      const connSec = document.getElementById('connectedSection');
+      if (cfg.paired && cfg.status === 'connected') {
+        badge.textContent = 'CONNECTED';
+        badge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-500/20 text-emerald-400';
+        info.textContent = 'Connected to ' + (cfg.phone || 'WhatsApp') + ' · sejak ' + (cfg.lastPaired ? new Date(cfg.lastPaired).toLocaleString('id-ID') : '-');
+        pairSec.classList.add('hidden');
+        connSec.classList.remove('hidden');
+      } else if (cfg.status === 'pairing') {
+        badge.textContent = 'PAIRING';
+        badge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-amber-500/20 text-amber-400';
+        info.textContent = 'Waiting for pairing confirmation in WhatsApp...';
+        pairSec.classList.remove('hidden');
+        connSec.classList.add('hidden');
+        document.getElementById('pairingCodeBox').classList.remove('hidden');
+        document.getElementById('confirmPairBox').classList.remove('hidden');
+        document.getElementById('pairingCodeDisplay').textContent = cfg.pairingCode || '------';
+      } else {
+        badge.textContent = 'DISCONNECTED';
+        badge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-slate-500/20 text-slate-400';
+        info.textContent = 'Not connected yet. Generate a pairing code to start.';
+        pairSec.classList.remove('hidden');
+        connSec.classList.add('hidden');
+        document.getElementById('pairingCodeBox').classList.add('hidden');
+        document.getElementById('confirmPairBox').classList.add('hidden');
+      }
+      const sample = {
+        id: 'ORD-SAMPLE', typeName: 'Video Editing', price: 150000,
+        buyerName: 'Budi Santoso', buyerPhone: '081234567890',
+        message: 'Mau edit video 3 menit, style cinematic, deadline 3 hari.',
+        exampleLink: 'https://youtube.com/watch?v=example', createdAt: new Date().toISOString()
+      };
+      document.getElementById('msgPreview').textContent = SWCommission.buildWANotification(sample);
+    }
+
+    document.getElementById('genPairBtn').addEventListener('click', async () => {
+      const code = await SWCommission.generatePairingCode();
+      document.getElementById('pairingCodeDisplay').textContent = code;
+      document.getElementById('pairingCodeBox').classList.remove('hidden');
+      document.getElementById('confirmPairBox').classList.remove('hidden');
+      showToast('Pairing code created: ' + code);
+      await renderWA();
+    });
+    document.getElementById('copyCodeBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(document.getElementById('pairingCodeDisplay').textContent);
+      showToast('Code copied!');
+    });
+    document.getElementById('confirmPairBtn').addEventListener('click', async () => {
+      const phone = document.getElementById('pairPhone').value.trim();
+      if (!phone) { showToast('Enter the WhatsApp number first', 'error'); return; }
+      await SWCommission.confirmPairing(phone);
+      showToast('WhatsApp bot connected successfully!');
+      await renderWA();
+      await renderOverview();
+    });
+    document.getElementById('disconnectWA').addEventListener('click', async () => {
+      await SWCommission.disconnectWA();
+      showToast('WhatsApp connection disconnected');
+      await renderWA();
+      await renderOverview();
+    });
+
+    // ========== SALDO ==========
+    const TOPUP_API_BASE = 'https://tokoshopp.web.id';
+    const TOPUP_API_KEY = ''; // set via payment config
+    let topupAmount = 25000;
+    let topupTrxId = null;
+
+    async function renderBalance() {
+      const [balance, withdrawals, txs] = await Promise.all([
+        SWWallet.getBalance(), SWWallet.getWithdrawals(), SWWallet.getTransactions()
+      ]);
+      document.getElementById('saldoBalance').textContent = 'Rp' + balance.toLocaleString('id-ID');
+      renderWdChannels();
+      updateWdSummary();
+
+      const wdList = document.getElementById('withdrawalHistory');
+      const statusColor = { pending: 'text-amber-400', processing: 'text-sky-400', success: 'text-emerald-400', failed: 'text-red-400', rejected: 'text-red-400' };
+      wdList.innerHTML = withdrawals.length ? withdrawals.slice(0, 15).map(w => `
+        <div class="px-5 py-4 flex items-center justify-between gap-3">
+          <div>
+            <p class="font-medium text-sm">${w.channel} · ${w.accountNumber}</p>
+            <p class="text-xs text-slate-500">${new Date(w.createdAt).toLocaleString('id-ID')}</p>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="font-semibold text-sm">Rp${Number(w.amount).toLocaleString('id-ID')}</p>
+            <span class="text-xs ${statusColor[w.status] || 'text-slate-400'}">${w.status}</span>
+          </div>
+        </div>
+      `).join('') : '<p class="px-5 py-8 text-center text-slate-500 text-sm">No withdrawals yet</p>';
+
+      const txLabel = { topup: 'Top Up', withdraw: 'Withdraw Balance', withdraw_refund: 'Withdrawal refund', subscription_fee: 'Store subscription fee' };
+      const txList = document.getElementById('walletHistory');
+      txList.innerHTML = txs.length ? txs.slice(0, 20).map(t => `
+        <div class="px-5 py-4 flex items-center justify-between gap-3">
+          <div>
+            <p class="font-medium text-sm">${txLabel[t.type] || t.type}</p>
+            <p class="text-xs text-slate-500">${new Date(t.createdAt).toLocaleString('id-ID')}${t.note ? ' · ' + t.note : ''}</p>
+          </div>
+          <p class="font-semibold text-sm ${t.amount >= 0 ? 'text-emerald-400' : 'text-red-400'}">${t.amount >= 0 ? '+' : ''}Rp${Number(t.amount).toLocaleString('id-ID')}</p>
+        </div>
+      `).join('') : '<p class="px-5 py-8 text-center text-slate-500 text-sm">No transactions yet</p>';
+    }
+
+    let wdType = 'ewallet';
+    document.querySelectorAll('.wd-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        wdType = btn.dataset.type;
+        document.querySelectorAll('.wd-type-btn').forEach(b => {
+          b.classList.remove('bg-white/10', 'border', 'border-sky-500/50', 'text-white');
+          b.classList.add('bg-white/5', 'text-slate-400');
+        });
+        btn.classList.remove('bg-white/5', 'text-slate-400');
+        btn.classList.add('bg-white/10', 'border', 'border-sky-500/50', 'text-white');
+        renderWdChannels();
+      });
+    });
+
+    function renderWdChannels() {
+      const select = document.getElementById('wdChannel');
+      const channels = SWWallet.getChannelsForType(wdType);
+      select.innerHTML = channels.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function updateWdSummary() {
+      document.getElementById('wdFeeLabel').textContent = 'Rp' + SWWallet.WITHDRAW_FEE.toLocaleString('id-ID');
+      const amount = parseInt(document.getElementById('wdAmount').value, 10) || 0;
+      const total = amount > 0 ? amount + SWWallet.WITHDRAW_FEE : 0;
+      document.getElementById('wdTotalLabel').textContent = total > 0 ? 'Rp' + total.toLocaleString('id-ID') : '—';
+    }
+    document.getElementById('wdAmount').addEventListener('input', updateWdSummary);
+
+    document.getElementById('submitWdBtn').addEventListener('click', async () => {
+      const result = await SWWallet.requestWithdrawal({
+        type: wdType,
+        channel: document.getElementById('wdChannel').value,
+        accountNumber: document.getElementById('wdAccountNumber').value.trim(),
+        accountName: document.getElementById('wdAccountName').value.trim(),
+        amount: parseInt(document.getElementById('wdAmount').value, 10) || 0
+      });
+      if (!result.success) {
+        showToast(result.reason, 'error');
+        return;
+      }
+      showToast('Withdrawal request created, waiting for admin review');
+      document.getElementById('wdAccountNumber').value = '';
+      document.getElementById('wdAccountName').value = '';
+      document.getElementById('wdAmount').value = '';
+      await renderBalance();
+      await renderOverview();
+    });
+
+    // ---- Top Up Modal ----
+    function formatRupiahLocal(n) { return 'Rp' + Number(n).toLocaleString('id-ID'); }
+
+    document.getElementById('openTopupBtn').addEventListener('click', () => {
+      document.getElementById('topupModal').classList.remove('hidden');
+      document.getElementById('topupModal').classList.add('flex');
+      document.getElementById('topupStep1').classList.remove('hidden');
+      document.getElementById('topupStep2').classList.add('hidden');
+    });
+    document.getElementById('closeTopupBtn').addEventListener('click', () => {
+      document.getElementById('topupModal').classList.add('hidden');
+      document.getElementById('topupModal').classList.remove('flex');
+    });
+    document.getElementById('backTopupBtn').addEventListener('click', () => {
+      document.getElementById('topupStep1').classList.remove('hidden');
+      document.getElementById('topupStep2').classList.add('hidden');
+    });
+
+    document.querySelectorAll('.topup-amount-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.topup-amount-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        topupAmount = parseInt(btn.dataset.amount, 10);
+        document.getElementById('topupCustomAmount').value = '';
+      });
+    });
+    document.getElementById('topupCustomAmount').addEventListener('input', (e) => {
+      document.querySelectorAll('.topup-amount-btn').forEach(b => b.classList.remove('active'));
+      topupAmount = parseInt(e.target.value, 10) || 0;
+    });
+
+    document.getElementById('createTopupBtn').addEventListener('click', async () => {
+      if (topupAmount < 10000) { showToast('Minimum top-up is Rp10,000', 'error'); return; }
+      const btn = document.getElementById('createTopupBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner mx-auto"></div>';
+
+      const orderId = 'TOPUP-' + Date.now();
+      try {
+        const res = await fetch(`${TOPUP_API_BASE}/api/payment/create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-api-key': TOPUP_API_KEY },
+          body: JSON.stringify({ amount: topupAmount, order_id: orderId })
+        });
+        const data = await res.json();
+        if (data.success && data.qr_image) {
+          topupTrxId = data.transaction_id;
+          showTopupQr(data.qr_image, topupAmount, topupTrxId);
+        } else {
+          simulateTopupFallback(orderId, topupAmount);
+        }
+      } catch (e) {
+        simulateTopupFallback(orderId, topupAmount);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Create QRIS';
+      }
+    });
+
+    function simulateTopupFallback(orderId, amount) {
+      topupTrxId = 'TR-' + orderId;
+      const canvas = document.createElement('canvas');
+      canvas.width = 180; canvas.height = 180;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, 180, 180);
+      ctx.fillStyle = '#120c22'; ctx.font = 'bold 13px Inter, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('QR', 90, 80);
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillText(formatRupiahLocal(amount), 90, 100);
+      showTopupQr(canvas.toDataURL('image/png'), amount, topupTrxId);
+      showToast('Payment gateway not configured yet. Contact support.', 'error');
+    }
+
+    function showTopupQr(qrDataUrl, amount, trxId) {
+      document.getElementById('topupQrContainer').innerHTML = `<img src="${qrDataUrl}" class="w-40 h-40 object-contain mx-auto" alt="QR">`;
+      document.getElementById('topupAmountLabel').textContent = formatRupiahLocal(amount);
+      document.getElementById('topupTrxId').textContent = trxId;
+      document.getElementById('topupStatusResult').classList.add('hidden');
+      document.getElementById('topupStep1').classList.add('hidden');
+      document.getElementById('topupStep2').classList.remove('hidden');
+    }
+
+    document.getElementById('checkTopupStatusBtn').addEventListener('click', async () => {
+      if (!topupTrxId) return;
+      const btn = document.getElementById('checkTopupStatusBtn');
+      btn.disabled = true;
+      btn.textContent = 'Mengecek...';
+      const statusEl = document.getElementById('topupStatusResult');
+
+      try {
+        if (topupTrxId.startsWith('TR-')) {
+          statusEl.classList.remove('hidden');
+          statusEl.innerHTML = '<span class="text-amber-400">Status: pending</span>';
+          return;
+        }
+        const res = await fetch(`${TOPUP_API_BASE}/api/payment/status`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-api-key': TOPUP_API_KEY },
+          body: JSON.stringify({ transaction_id: topupTrxId })
+        });
+        const data = await res.json();
+        statusEl.classList.remove('hidden');
+        if (data.success && data.status === 'paid') {
+          await SWWallet.addBalance(topupAmount, 'Top up via QRIS ' + topupTrxId);
+          statusEl.innerHTML = '<span class="text-emerald-400 font-semibold">Success! Balance updated.</span>';
+          showToast('Top-up successful, balance updated!');
+          await renderBalance();
+          await renderOverview();
+        } else {
+          statusEl.innerHTML = `<span class="text-amber-400">Status: ${data.status || 'pending'}</span>`;
+        }
+      } catch (e) {
+        statusEl.classList.remove('hidden');
+        statusEl.innerHTML = '<span class="text-red-400">Failed cek status</span>';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Check payment status';
+      }
+    });
+
+    // ========== Theme Studio ==========
+    let themeTarget = 'linkbio'; // linkbio | shop
+    let editingLinks = [];
+    let editingSocials = [];
+    const SOCIAL_PLATFORMS = [
+      { id: 'ig', name: 'Instagram' },
+      { id: 'yt', name: 'YouTube' },
+      { id: 'tt', name: 'TikTok' },
+      { id: 'x', name: 'X / Twitter' },
+      { id: 'discord', name: 'Discord' },
+      { id: 'github', name: 'GitHub' },
+      { id: 'twitch', name: 'Twitch' },
+      { id: 'web', name: 'Website' }
+    ];
+
+    function getThemeUsername() {
+      return (currentUser && currentUser.username) ? currentUser.username.toLowerCase() : '';
+    }
+
+    async function loadThemeIntoForm() {
+      const t = await TraktiRieTheme.getTheme(themeTarget); // own store, no slug needed
+      document.getElementById('thPrimary').value = t.primary || '#a855f7';
+      document.getElementById('thPrimaryEnd').value = t.primaryEnd || '#7c3aed';
+      document.getElementById('thAccent').value = t.accent || '#c084fc';
+      document.getElementById('thBg').value = (t.bg && t.bg.startsWith('#')) ? t.bg : '#05030c';
+      document.getElementById('thText').value = (t.text && t.text.startsWith('#')) ? t.text : '#ffffff';
+      document.getElementById('thTextMuted').value = (t.textMuted && t.textMuted.startsWith('#')) ? t.textMuted : '#a78bfa';
+      document.getElementById('thBgType').value = t.bgType || 'gradient';
+      document.getElementById('thBgValue').value = t.bgValue || t.bg || '';
+      document.getElementById('thButtonStyle').value = t.buttonStyle || 'rounded';
+      document.getElementById('thButtonShadow').checked = !!t.buttonShadow;
+      document.getElementById('thProductLayout').value = t.productLayout || '1x2';
+      document.getElementById('thCardRadius').value = t.cardRadius || '1.25rem';
+      document.getElementById('thName').value = t.name || '';
+
+      // Links (linkbio only)
+      const cfg = (await TraktiRieTheme.getLinkBioConfig()) || {};
+      editingLinks = (cfg.links && cfg.links.length) ? JSON.parse(JSON.stringify(cfg.links)) : [
+        { title: 'Support / Donation', url: (window.TraktiRieRouter?TraktiRieRouter.publicUrl(getThemeUsername(),'support'):'/support'), style: 'primary', icon: 'heart' },
+        { title: 'Open Commission', url: (window.TraktiRieRouter?TraktiRieRouter.publicUrl(getThemeUsername(),'commission'):'/commission'), style: 'secondary', icon: 'film' },
+        { title: 'Digital Shop', url: (window.TraktiRieRouter?TraktiRieRouter.publicUrl(getThemeUsername(),'shop'):('/'+getThemeUsername()+'/shop')), style: 'secondary', icon: 'cart' }
+      ];
+      renderLinksEditor();
+      renderPresets(t.id);
+      const showLb = themeTarget === 'linkbio';
+      document.getElementById('linkbioLinksEditor').style.display = showLb ? '' : 'none';
+      const pfEd = document.getElementById('linkbioProfileEditor');
+      const soEd = document.getElementById('linkbioSocialsEditor');
+      const pgEd = document.getElementById('linkbioPagesEditor');
+      if (pfEd) pfEd.style.display = showLb ? '' : 'none';
+      if (soEd) soEd.style.display = showLb ? '' : 'none';
+      if (pgEd) pgEd.style.display = showLb ? '' : 'none';
+
+      if (showLb) {
+        try {
+          const profile = currentUser || {};
+          document.getElementById('pfDisplayName').value = profile.displayName || profile.username || '';
+          document.getElementById('pfBio').value = profile.bio || '';
+          document.getElementById('pfAvatarUrl').value = profile.avatarUrl || '';
+        } catch (e) {}
+        editingSocials = (cfg.socials && cfg.socials.length)
+          ? JSON.parse(JSON.stringify(cfg.socials))
+          : [
+              { name: 'Instagram', url: '', icon: 'ig' },
+              { name: 'YouTube', url: '', icon: 'yt' },
+              { name: 'TikTok', url: '', icon: 'tt' }
+            ];
+        renderSocialsEditor();
+        // Public pages toggles (default ON if not set)
+        var pages = cfg.pages || {};
+        var elShop = document.getElementById('pageShop');
+        var elComm = document.getElementById('pageCommission');
+        var elSupp = document.getElementById('pageSupport');
+        if (elShop) elShop.checked = pages.shop !== false;
+        if (elComm) elComm.checked = pages.commission !== false;
+        if (elSupp) elSupp.checked = pages.support !== false;
+      }
+    }
+
+    async function collectThemeFromForm() {
+      const base = await TraktiRieTheme.getTheme(themeTarget);
+      return {
+        ...base,
+        id: base.id && !base.id.startsWith('custom_') ? base.id : 'custom_' + Date.now(),
+        name: document.getElementById('thName').value.trim() || 'Custom Theme',
+        primary: document.getElementById('thPrimary').value,
+        primaryEnd: document.getElementById('thPrimaryEnd').value,
+        accent: document.getElementById('thAccent').value,
+        bg: document.getElementById('thBg').value,
+        text: document.getElementById('thText').value,
+        textMuted: document.getElementById('thTextMuted').value,
+        bgType: document.getElementById('thBgType').value,
+        bgValue: document.getElementById('thBgValue').value.trim() || document.getElementById('thBg').value,
+        buttonStyle: document.getElementById('thButtonStyle').value,
+        buttonShadow: document.getElementById('thButtonShadow').checked,
+        productLayout: document.getElementById('thProductLayout').value,
+        cardRadius: document.getElementById('thCardRadius').value,
+        cardBg: base.cardBg || 'rgba(168, 85, 247, 0.08)',
+        cardBorder: base.cardBorder || 'rgba(168, 85, 247, 0.18)',
+        buttonText: base.buttonText || '#ffffff',
+        bgSecondary: base.bgSecondary || document.getElementById('thBg').value,
+        cardHover: true
+      };
+    }
+
+    function renderPresets(activeId) {
+      const box = document.getElementById('presetThemes');
+      const themes = TraktiRieTheme.DEFAULT_THEMES;
+      box.innerHTML = Object.values(themes).map(t => `
+        <button type="button" data-preset="${t.id}" class="text-left p-4 rounded-xl border transition hover:bg-white/5 ${activeId === t.id ? 'border-violet-500 bg-violet-500/10' : 'border-white/10'}">
+          <div class="flex gap-1.5 mb-2">
+            <span class="w-5 h-5 rounded" style="background:${t.primary}"></span>
+            <span class="w-5 h-5 rounded" style="background:${t.primaryEnd}"></span>
+            <span class="w-5 h-5 rounded border border-white/20" style="background:${t.bg}"></span>
+          </div>
+          <p class="font-medium text-sm">${t.name}</p>
+          <p class="text-xs text-slate-500 mt-0.5">${t.description || ''}</p>
+        </button>
+      `).join('');
+      box.querySelectorAll('[data-preset]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.preset;
+          const preset = { ...TraktiRieTheme.DEFAULT_THEMES[id] };
+          await TraktiRieTheme.saveTheme(themeTarget, preset);
+          await loadThemeIntoForm();
+          showToast('Theme "' + preset.name + '" applied');
+        });
+      });
+    }
+
+    function renderLinksEditor() {
+      const list = document.getElementById('linksList');
+      if (!list) return;
+      if (!editingLinks.length) {
+        list.innerHTML = '<p class="text-sm text-slate-500">No links yet. Click + Add link.</p>';
+        return;
+      }
+      const iconKeys = ['heart','film','cart','spark','chat','palette','file','music','link','box','star','globe','users','rocket'];
+      list.innerHTML = editingLinks.map((link, i) => {
+        const cur = link.icon || link.emoji || 'link';
+        const opts = iconKeys.map(k => '<option value="' + k + '"' + (cur === k ? ' selected' : '') + '>' + k + '</option>').join('');
+        const title = (link.title || '').replace(/"/g, '&quot;');
+        const url = (link.url || '').replace(/"/g, '&quot;');
+        const stylePri = link.style === 'primary' ? 'selected' : '';
+        const styleSec = link.style !== 'primary' ? 'selected' : '';
+        return '<div class="flex flex-wrap gap-2 items-center p-3 rounded-xl bg-slate-900/60 border border-white/5" data-idx="' + i + '">' +
+          '<div class="flex flex-col gap-0.5">' +
+          '<button type="button" class="px-1.5 py-0.5 rounded text-xs text-slate-400 hover:bg-white/10 link-up" title="Move up">↑</button>' +
+          '<button type="button" class="px-1.5 py-0.5 rounded text-xs text-slate-400 hover:bg-white/10 link-down" title="Move down">↓</button></div>' +
+          '<select class="w-24 px-2 py-2 rounded-lg bg-slate-950 border border-white/10 text-sm link-icon">' + opts + '</select>' +
+          '<input type="text" value="' + title + '" placeholder="Title" class="flex-1 min-w-[8rem] px-3 py-2 rounded-lg bg-slate-950 border border-white/10 text-sm link-title">' +
+          '<input type="text" value="' + url + '" placeholder="https://..." class="flex-1 min-w-[10rem] px-3 py-2 rounded-lg bg-slate-950 border border-white/10 text-sm link-url">' +
+          '<select class="px-2 py-2 rounded-lg bg-slate-950 border border-white/10 text-sm link-style">' +
+          '<option value="primary" ' + stylePri + '>Primary</option>' +
+          '<option value="secondary" ' + styleSec + '>Secondary</option></select>' +
+          '<button type="button" class="px-2 py-2 rounded-lg text-red-400 hover:bg-red-500/10 text-sm link-del" title="Delete">✕</button></div>';
+      }).join('');
+      list.querySelectorAll('[data-idx]').forEach(row => {
+        const i = +row.dataset.idx;
+        row.querySelector('.link-icon').addEventListener('change', e => { editingLinks[i].icon = e.target.value; delete editingLinks[i].emoji; });
+        row.querySelector('.link-title').addEventListener('input', e => { editingLinks[i].title = e.target.value; });
+        row.querySelector('.link-url').addEventListener('input', e => { editingLinks[i].url = e.target.value; });
+        row.querySelector('.link-style').addEventListener('change', e => { editingLinks[i].style = e.target.value; });
+        row.querySelector('.link-del').addEventListener('click', () => { editingLinks.splice(i, 1); renderLinksEditor(); });
+        row.querySelector('.link-up').addEventListener('click', () => {
+          if (i <= 0) return;
+          const tmp = editingLinks[i]; editingLinks[i] = editingLinks[i-1]; editingLinks[i-1] = tmp;
+          renderLinksEditor();
+        });
+        row.querySelector('.link-down').addEventListener('click', () => {
+          if (i >= editingLinks.length - 1) return;
+          const tmp = editingLinks[i]; editingLinks[i] = editingLinks[i+1]; editingLinks[i+1] = tmp;
+          renderLinksEditor();
+        });
+      });
+    }
+
+    function renderSocialsEditor() {
+      const list = document.getElementById('socialsList');
+      if (!list) return;
+      if (!editingSocials.length) {
+        list.innerHTML = '<p class="text-sm text-slate-500">No socials. Click + Add social.</p>';
+        return;
+      }
+      list.innerHTML = editingSocials.map((s, i) => {
+        const opts = SOCIAL_PLATFORMS.map(p =>
+          '<option value="' + p.id + '"' + ((s.icon || '') === p.id ? ' selected' : '') + '>' + p.name + '</option>'
+        ).join('');
+        const url = (s.url || '').replace(/"/g, '&quot;');
+        return '<div class="flex flex-wrap gap-2 items-center p-3 rounded-xl bg-slate-900/60 border border-white/5" data-sidx="' + i + '">' +
+          '<select class="w-36 px-2 py-2 rounded-lg bg-slate-950 border border-white/10 text-sm social-icon">' + opts + '</select>' +
+          '<input type="url" value="' + url + '" placeholder="https://..." class="flex-1 min-w-[12rem] px-3 py-2 rounded-lg bg-slate-950 border border-white/10 text-sm social-url">' +
+          '<button type="button" class="px-2 py-2 rounded-lg text-red-400 hover:bg-red-500/10 text-sm social-del">✕</button></div>';
+      }).join('');
+      list.querySelectorAll('[data-sidx]').forEach(row => {
+        const i = +row.dataset.sidx;
+        row.querySelector('.social-icon').addEventListener('change', e => {
+          const p = SOCIAL_PLATFORMS.find(x => x.id === e.target.value);
+          editingSocials[i].icon = e.target.value;
+          editingSocials[i].name = p ? p.name : e.target.value;
+        });
+        row.querySelector('.social-url').addEventListener('input', e => { editingSocials[i].url = e.target.value; });
+        row.querySelector('.social-del').addEventListener('click', () => { editingSocials.splice(i, 1); renderSocialsEditor(); });
+      });
+    }
+
+    document.getElementById('themeTargetLinkbio')?.addEventListener('click', async () => {
+      themeTarget = 'linkbio';
+      document.getElementById('themeTargetLinkbio').className = 'px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 text-sm font-semibold';
+      document.getElementById('themeTargetShop').className = 'px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10';
+      await loadThemeIntoForm();
+    });
+    document.getElementById('themeTargetShop')?.addEventListener('click', async () => {
+      themeTarget = 'shop';
+      document.getElementById('themeTargetShop').className = 'px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-violet-500 text-sm font-semibold';
+      document.getElementById('themeTargetLinkbio').className = 'px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10';
+      await loadThemeIntoForm();
+    });
+
+    document.getElementById('addLinkBtn')?.addEventListener('click', () => {
+      editingLinks.push({ title: 'Link Baru', url: 'https://', style: 'secondary', icon: 'link' });
+      renderLinksEditor();
+    });
+
+    document.getElementById('saveThemeBtn')?.addEventListener('click', async () => {
+      const theme = await collectThemeFromForm();
+      await TraktiRieTheme.saveTheme(themeTarget, theme);
+      if (themeTarget === 'linkbio') {
+        const displayName = (document.getElementById('pfDisplayName')?.value || '').trim();
+        const bio = (document.getElementById('pfBio')?.value || '').trim();
+        const avatarUrl = (document.getElementById('pfAvatarUrl')?.value || '').trim();
+        try {
+          if (window.SWAuth && typeof SWAuth.updateProfile === 'function') {
+            await SWAuth.updateProfile({ displayName, bio, avatarUrl });
+          } else if (window.TraktiRieBackend) {
+            await TraktiRieBackend.apiFetch('/api/profile', {
+              method: 'PUT',
+              body: JSON.stringify({ displayName, bio, avatarUrl })
+            });
+          }
+          if (currentUser) {
+            currentUser.displayName = displayName || currentUser.displayName;
+            currentUser.bio = bio;
+            currentUser.avatarUrl = avatarUrl;
+          }
+        } catch (e) { console.warn('profile save', e); }
+
+        const socials = editingSocials
+          .filter(s => (s.url || '').trim())
+          .map(s => ({ name: s.name, url: s.url.trim(), icon: s.icon }));
+        const existing = (await TraktiRieTheme.getLinkBioConfig()) || {};
+        await TraktiRieTheme.saveLinkBioConfig({
+          ...existing,
+          links: editingLinks,
+          socials,
+          displayName,
+          bio,
+          pages: {
+            shop: !!(document.getElementById('pageShop') && document.getElementById('pageShop').checked),
+            commission: !!(document.getElementById('pageCommission') && document.getElementById('pageCommission').checked),
+            support: !!(document.getElementById('pageSupport') && document.getElementById('pageSupport').checked)
+          }
+        });
+      }
+      showToast('Customization saved!');
+    });
+
+    document.getElementById('addSocialBtn')?.addEventListener('click', () => {
+      editingSocials.push({ name: 'Instagram', url: '', icon: 'ig' });
+      renderSocialsEditor();
+    });
+
+    document.getElementById('previewThemeBtn')?.addEventListener('click', () => {
+      // save dulu (fire-and-forget) lalu buka halaman publik
+      document.getElementById('saveThemeBtn').click();
+      const user = getThemeUsername();
+      if (themeTarget === 'linkbio') {
+        window.open((window.TraktiRieRouter ? TraktiRieRouter.publicUrl(user, 'linkbio') : ('/' + encodeURIComponent(user))), '_blank');
+      } else {
+        window.open((window.TraktiRieRouter ? TraktiRieRouter.publicUrl(user, 'shop') : ('/' + encodeURIComponent(user) + '/shop')), '_blank');
+      }
+    });
+
+    document.getElementById('exportThemeBtn')?.addEventListener('click', async () => {
+      const theme = await collectThemeFromForm();
+      TraktiRieTheme.downloadThemeFile(theme, (theme.id || 'theme') + '.traktirie-theme.json');
+      showToast('Theme file downloaded');
+    });
+
+    document.getElementById('importThemeFile')?.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const result = TraktiRieTheme.importTheme(text);
+        if (!result.success) {
+          showToast(result.message || 'Import gagal', 'error');
+          return;
+        }
+        await TraktiRieTheme.saveTheme(themeTarget, result.theme);
+        await loadThemeIntoForm();
+        showToast('Theme "' + (result.theme.name || 'imported') + '" imported successfully');
+      } catch (err) {
+        showToast('Failed to read file', 'error');
+      }
+      e.target.value = '';
+    });
+
+    // Load form when theme tab opened
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (link.dataset.tab === 'theme') {
+          setTimeout(loadThemeIntoForm, 50);
+        }
+      });
+    });
+
+    boot();
+  </script>
+</body>
+</html>

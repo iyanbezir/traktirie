@@ -1,0 +1,15 @@
+{
+  "name": "TraktiRie",
+  "short_name": "TraktiRie",
+  "description": "All-in-one page for creators to sell digital products, take tips, and open commissions.",
+  "start_url": "/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05030c",
+  "theme_color": "#05030c",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

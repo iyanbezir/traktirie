@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="notranslate" translate="no" lang="en">
+<head>
+  <meta name="google" content="notranslate">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donation — TraktiRie</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed' },
+            accent: { 400:'#a78bfa',500:'#8b5cf6' },
+            slate: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#6b5b95',600:'#4c2f85',700:'#2d1b54',800:'#120c22',900:'#0c0818',950:'#05030c' },
+            sky: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed',900:'#3b1f6b' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05030c">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-white font-sans antialiased min-h-screen">
+  <!-- Navbar -->
+  <nav class="border-b border-white/5 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center font-bold text-sm">T</div>
+        <span class="font-bold">Trakti<span class="text-sky-400">Rie</span></span>
+      </a>
+      <a href="/" class="text-sm text-slate-400 hover:text-white">← Kembali</a>
+    </div>
+  </nav>
+
+  <main class="max-w-lg mx-auto px-4 py-10">
+    <!-- Creator Card -->
+    <div class="text-center mb-8">
+      <div class="avatar-ring w-24 h-24 mx-auto mb-4">
+        <img id="creatorAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=creator&backgroundColor=8b5cf6" alt="Avatar" class="w-full h-full rounded-full bg-slate-800">
+      </div>
+      <h1 id="creatorName" class="text-2xl font-bold">@creator</h1>
+      <p id="creatorBio" class="text-slate-400 text-sm mt-1">Founder & Creator • TraktiRie</p>
+      <p class="text-slate-500 text-xs mt-2 max-w-xs mx-auto">Thanks for the support! Your tip helps me keep creating.</p>
+      <div id="catNav" class="flex flex-wrap justify-center gap-2 mt-4 text-xs"></div>
+    </div>
+
+    <!-- Donation Form -->
+    <div class="glass rounded-3xl p-6 space-y-6">
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-3">Choose amount</label>
+        <div class="grid grid-cols-3 gap-3">
+          <button type="button" class="amount-btn py-3 rounded-xl border border-white/10 text-sm font-semibold" data-amount="5000">Rp5rb</button>
+          <button type="button" class="amount-btn py-3 rounded-xl border border-white/10 text-sm font-semibold" data-amount="10000">Rp10rb</button>
+          <button type="button" class="amount-btn py-3 rounded-xl border border-white/10 text-sm font-semibold active" data-amount="25000">Rp25rb</button>
+          <button type="button" class="amount-btn py-3 rounded-xl border border-white/10 text-sm font-semibold" data-amount="50000">Rp50rb</button>
+          <button type="button" class="amount-btn py-3 rounded-xl border border-white/10 text-sm font-semibold" data-amount="100000">Rp100rb</button>
+          <button type="button" class="amount-btn py-3 rounded-xl border border-white/10 text-sm font-semibold" data-amount="custom">Custom</button>
+        </div>
+      </div>
+
+      <div id="customAmountWrap" class="hidden">
+        <label class="block text-sm font-medium text-slate-300 mb-2">Custom amount (Rp)</label>
+        <input type="number" id="customAmount" min="1000" step="1000" placeholder="Enter amount" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none text-white">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-2">Name (optional)</label>
+        <input type="text" id="supporterName" placeholder="Anonymous" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none text-white">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-2">Message (optional)</label>
+        <textarea id="message" rows="2" placeholder="Semangat terus ya!" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none text-white resize-none"></textarea>
+      </div>
+
+      <button id="payBtn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-base hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg shadow-sky-500/20">
+        <span>Pay now</span>
+        <span id="payAmountLabel">— Rp25.000</span>
+      </button>
+
+      <p class="text-center text-xs text-slate-500">Secure payment via QRIS • TraktiRie</p>
+    </div>
+
+    <!-- Papan Dukungan -->
+    <div class="glass rounded-3xl p-6 mt-6">
+      <h2 class="font-semibold mb-1">Papan Dukungan</h2>
+      <p class="text-slate-500 text-xs mb-2">People who have supported <span id="wallUser">@creator</span></p>
+      <div id="supportersWall"></div>
+    </div>
+
+    <!-- Payment Result Modal -->
+    <div id="paymentModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+      <div class="bg-slate-900 rounded-3xl p-6 max-w-sm w-full border border-white/10 shadow-2xl">
+        <div class="text-center">
+          <h3 class="text-lg font-bold mb-1">Scan QR to pay</h3>
+          <p class="text-sm text-slate-400 mb-4">Amount: <span id="modalAmount" class="font-semibold text-white">Rp25.000</span></p>
+          
+          <div id="qrContainer" class="qr-box mx-auto mb-4">
+            <!-- QR image will be injected here -->
+            <div class="w-48 h-48 flex items-center justify-center text-slate-400 text-sm">Loading QR...</div>
+          </div>
+
+          <p class="text-xs text-slate-500 mb-4">Transaction ID: <span id="trxId" class="font-mono text-slate-300">-</span></p>
+
+          <div class="flex gap-3">
+            <button id="checkStatusBtn" class="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 transition">
+              Cek Status
+            </button>
+            <button id="closeModalBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 text-sm font-medium hover:bg-slate-700 transition">
+              Closed
+            </button>
+          </div>
+
+          <div id="statusResult" class="mt-4 text-sm hidden"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/backend-config.js"></script>
+  <script src="js/backend-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/theme-engine.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/payment.js"></script>
+  <script>
+    (async function () {
+      var user = TraktiRieRouter.getUsernameFromUrl('');
+      document.getElementById('creatorName').textContent = '@' + user;
+      document.getElementById('creatorAvatar').src =
+        'https://api.dicebear.com/7.x/avataaars/svg?seed=' + encodeURIComponent(user) + '&backgroundColor=8b5cf6';
+      document.title = 'Support @' + user + ' — TraktiRie';
+      var wall = document.getElementById('wallUser');
+      if (wall) wall.textContent = '@' + user;
+      if (window.SWAuth) {
+        var p = await SWAuth.getProfileByUsername(user);
+        if (p && p.bio) document.getElementById('creatorBio').textContent = p.bio;
+        else if (p && p.displayName) document.getElementById('creatorBio').textContent = p.displayName;
+      }
+      var nav = document.getElementById('catNav');
+      if (nav) {
+        var lbCfg = null;
+        try { lbCfg = await TraktiRieTheme.getLinkBioConfig(user); } catch (e) {}
+        TraktiRieRouter.renderCatNav(nav, user, 'support', lbCfg);
+      }
+    })();
+  </script>
+</body>
+</html>

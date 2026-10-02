@@ -1,0 +1,186 @@
+/* TraktiRie — Themeable styles via CSS variables */
+:root {
+  --tr-bg: #05030c;
+  --tr-bg-secondary: #0c0818;
+  --tr-text: #ffffff;
+  --tr-text-muted: #a78bfa;
+  --tr-primary: #a855f7;
+  --tr-primary-end: #7c3aed;
+  --tr-accent: #c084fc;
+  --tr-card-bg: rgba(168, 85, 247, 0.08);
+  --tr-card-border: rgba(168, 85, 247, 0.18);
+  --tr-button-text: #ffffff;
+  --tr-card-radius: 1.25rem;
+  --tr-glow: #c084fc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--tr-bg);
+  color: var(--tr-text);
+  background-attachment: fixed;
+}
+
+/* Glass / card themed */
+.glass {
+  background: var(--tr-card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--tr-card-border);
+  border-radius: var(--tr-card-radius);
+}
+
+.tr-card {
+  background: var(--tr-card-bg);
+  border: 1px solid var(--tr-card-border);
+  border-radius: var(--tr-card-radius);
+  color: var(--tr-text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tr-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--tr-primary) 25%, transparent);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--tr-accent), var(--tr-primary), var(--tr-primary-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.qr-box {
+  background: white;
+  padding: 16px;
+  border-radius: 16px;
+  display: inline-block;
+}
+
+.amount-btn {
+  transition: all 0.2s ease;
+}
+.amount-btn:hover,
+.amount-btn.active {
+  background: linear-gradient(135deg, var(--tr-primary), var(--tr-primary-end));
+  border-color: transparent;
+  color: var(--tr-button-text);
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--tr-primary) 45%, transparent);
+}
+
+/* Toast */
+.toast {
+  pointer-events: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: var(--tr-bg-secondary);
+  border: 1px solid var(--tr-card-border);
+  color: var(--tr-text);
+  font-size: 14px;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--tr-primary) 25%, transparent);
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.toast.success { border-color: #10b981; }
+.toast.error { border-color: #ef4444; }
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid color-mix(in srgb, var(--tr-primary) 25%, transparent);
+  border-top-color: var(--tr-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.avatar-ring {
+  background: linear-gradient(135deg, var(--tr-primary), var(--tr-primary-end), var(--tr-accent));
+  padding: 3px;
+  border-radius: 9999px;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--tr-primary) 35%, transparent);
+}
+
+/* LinkBio buttons */
+.linkbio-btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  color: var(--tr-button-text);
+}
+.linkbio-btn.primary {
+  background: linear-gradient(135deg, var(--tr-primary), var(--tr-primary-end));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--tr-primary) 35%, transparent);
+}
+.linkbio-btn.secondary {
+  background: var(--tr-card-bg);
+  border: 1px solid var(--tr-card-border);
+  color: var(--tr-text);
+}
+.linkbio-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  opacity: 0.95;
+}
+.linkbio-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* Shop product grid layouts */
+.product-grid-1x1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.product-grid-1x2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .product-grid-1x2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* Theme studio color swatch */
+.theme-swatch {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+}
+.theme-swatch.active {
+  outline: 2px solid var(--tr-primary);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--tr-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--tr-primary-end);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tr-primary);
+}

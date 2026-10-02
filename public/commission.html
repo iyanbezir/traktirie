@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="notranslate" translate="no" lang="en">
+<head>
+  <meta name="google" content="notranslate">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Commission — TraktiRie</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 400:'#c084fc',500:'#a855f7' }, accent: { 400:'#a78bfa',500:'#8b5cf6' },
+            slate: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#6b5b95',600:'#4c2f85',700:'#2d1b54',800:'#120c22',900:'#0c0818',950:'#05030c' },
+            sky: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed',900:'#3b1f6b' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05030c">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-white font-sans antialiased min-h-screen">
+  <nav class="border-b border-white/5 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+    <div class="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center font-bold text-sm">T</div>
+        <span class="font-bold">Trakti<span class="text-sky-400">Rie</span></span>
+      </a>
+      <span id="statusBadge" class="text-xs px-2.5 py-1 rounded-full font-medium"></span>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-4 py-10">
+    <!-- Creator Header -->
+    <div class="text-center mb-8">
+      <div class="avatar-ring w-24 h-24 mx-auto mb-4">
+        <img id="creatorAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Creator&backgroundColor=8b5cf6" class="w-full h-full rounded-full bg-slate-800" alt="">
+      </div>
+      <h1 class="text-2xl font-bold" id="pageTitle">Open Commission</h1>
+      <p id="creatorHandle" class="text-sky-400 text-sm mt-1"></p>
+      <div id="catNav" class="flex flex-wrap justify-center gap-2 mt-4 text-xs"></div>
+      <p class="text-slate-400 text-sm mt-2 max-w-md mx-auto" id="pageDesc">I'm currently open for commissions. Feel free to order!</p>
+    </div>
+
+    <!-- Closed State -->
+    <div id="closedState" class="hidden glass rounded-3xl p-10 text-center">
+      <div class="text-5xl mb-4">🔒</div>
+      <h2 class="text-xl font-bold mb-2">Commissions are currently closed</h2>
+      <p class="text-slate-400 text-sm">This creator is not accepting orders right now. Check back later!</p>
+    </div>
+
+    <!-- Open State - Order Form -->
+    <div id="openState" class="hidden space-y-6">
+      <!-- Types -->
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-3">Choose a service type *</label>
+        <div id="typeList" class="space-y-3"></div>
+      </div>
+
+      <div class="glass rounded-3xl p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">Your name *</label>
+          <input type="text" id="buyerName" required placeholder="Full name or nickname" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">WhatsApp number *</label>
+          <input type="tel" id="buyerPhone" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">Message / Brief</label>
+          <textarea id="buyerMessage" rows="3" placeholder="Describe what you need (deadline, style, etc.)" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none resize-none"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">Reference for the seller * <span class="text-slate-500 font-normal">(at least 1 required)</span></label>
+          <p class="text-xs text-slate-500 mb-2">Photos, videos, or example links so the seller understands your brief</p>
+          <input type="url" id="exampleLink" placeholder="https://... reference link (Drive, Pinterest, IG, etc.)" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none mb-2">
+          <input type="file" id="exampleMedia" accept="image/*,video/*" multiple class="w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-white/10 file:text-white file:font-medium hover:file:bg-white/20">
+          <p class="text-[11px] text-slate-600 mt-1.5">Max references: 5 photos · 3 videos · 2 links (link above counts as 1)</p>
+        </div>
+
+        <button id="orderBtn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold text-base hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg shadow-sky-500/20 disabled:opacity-50">
+          Order now
+        </button>
+        <p class="text-center text-xs text-slate-500">After payment, the creator gets a WhatsApp notification right away</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-slate-900 rounded-3xl p-6 max-w-sm w-full border border-white/10 shadow-2xl">
+      <div class="text-center">
+        <h3 class="text-lg font-bold mb-1">Pay for commission</h3>
+        <p class="text-sm text-slate-400 mb-4">Amount: <span id="modalAmount" class="font-semibold text-white">Rp0</span></p>
+        <div id="qrContainer" class="qr-box mx-auto mb-4">
+          <div class="w-48 h-48 flex items-center justify-center text-slate-400 text-sm">Loading...</div>
+        </div>
+        <p class="text-xs text-slate-500 mb-4">Transaction ID: <span id="trxId" class="font-mono text-slate-300">-</span></p>
+        <div class="flex gap-3">
+          <button id="checkStatusBtn" class="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 transition">Check status</button>
+          <button id="closeModalBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 text-sm font-medium hover:bg-slate-700 transition">Cancel</button>
+        </div>
+        <div id="statusResult" class="mt-4 text-sm hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- Card Session — tampil saat notif WA gagal -->
+  <div id="orderCardModal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="glass rounded-3xl p-6 w-full max-w-md relative border border-amber-500/30" style="background:#120c22">
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-xl bg-amber-500/20 shrink-0">⚠️</div>
+        <div>
+          <h3 class="font-bold text-lg">WhatsApp notification failed</h3>
+          <p id="orderCardReason" class="text-sm text-slate-400 mt-0.5">Bot offline or not paired yet</p>
+        </div>
+      </div>
+      <p class="text-xs text-slate-500 mb-2">Order details (copy and send manually to the creator):</p>
+      <pre id="orderCardBody" class="text-xs leading-relaxed whitespace-pre-wrap rounded-2xl p-4 mb-3 max-h-56 overflow-y-auto bg-black/40 border border-white/10 font-mono text-slate-200"></pre>
+      <details class="mb-4 text-xs text-slate-500">
+        <summary class="cursor-pointer text-sky-400 hover:underline">Example bot API body</summary>
+        <pre id="orderCardExample" class="mt-2 whitespace-pre-wrap rounded-xl p-3 bg-black/30 border border-white/5 font-mono text-[11px] text-slate-400"></pre>
+      </details>
+      <div class="flex gap-2">
+        <button type="button" id="orderCardCopy" class="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-sky-500 to-violet-500">Copy details</button>
+        <button type="button" id="orderCardClose" class="flex-1 py-2.5 rounded-xl text-sm font-medium border border-white/10">Cancel</button>
+      </div>
+      <p class="text-[11px] text-center mt-3 text-slate-600">Your order is still saved. You can still pay via QR.</p>
+    </div>
+  </div>
+
+<div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/backend-config.js"></script>
+  <script src="js/backend-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/theme-engine.js"></script>
+  <script src="js/commission.js"></script>
+  <script src="js/payment.js"></script>
+  <script>
+    const PUBLIC_USER = TraktiRieRouter.getUsernameFromUrl('');
+    document.getElementById('creatorAvatar').src =
+      'https://api.dicebear.com/7.x/avataaars/svg?seed=' + encodeURIComponent(PUBLIC_USER) + '&backgroundColor=8b5cf6';
+    document.title = 'Commission @' + PUBLIC_USER + ' — TraktiRie';
+
+    let selectedType = null;
+
+    async function renderPage() {
+      const s = await SWCommission.getCommissionSettingsForSlug(PUBLIC_USER);
+      const badge = document.getElementById('statusBadge');
+      const closed = document.getElementById('closedState');
+      const open = document.getElementById('openState');
+
+      document.getElementById('pageTitle').textContent = s.title || 'Open Commission';
+      document.getElementById('pageDesc').textContent = s.description || '';
+
+      if (s.isOpen) {
+        badge.textContent = '● OPEN';
+        badge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-500/20 text-emerald-400';
+        closed.classList.add('hidden');
+        open.classList.remove('hidden');
+
+        const list = document.getElementById('typeList');
+        list.innerHTML = s.types.map((t, i) => `
+          <button type="button" class="type-btn w-full text-left p-4 rounded-2xl border border-white/10 hover:border-sky-500/50 transition ${i===0?'border-sky-500/50 bg-sky-500/10':''}" data-id="${t.id}" data-price="${t.price}" data-name="${t.name}">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="font-semibold">${t.name}</p>
+                ${t.example ? `<p class="text-xs text-slate-500 mt-0.5 truncate max-w-[200px]">Example: ${t.example}</p>` : ''}
+              </div>
+              <span class="font-bold text-sky-400">Rp${Number(t.price).toLocaleString('id-ID')}</span>
+            </div>
+          </button>
+        `).join('');
+
+        // Select first by default
+        if (s.types.length) {
+          selectedType = s.types[0];
+        }
+
+        document.querySelectorAll('.type-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.type-btn').forEach(b => {
+              b.classList.remove('border-sky-500/50', 'bg-sky-500/10');
+              b.classList.add('border-white/10');
+            });
+            btn.classList.add('border-sky-500/50', 'bg-sky-500/10');
+            btn.classList.remove('border-white/10');
+            selectedType = {
+              id: btn.dataset.id,
+              name: btn.dataset.name,
+              price: parseInt(btn.dataset.price, 10)
+            };
+          });
+        });
+      } else {
+        badge.textContent = '● CLOSED';
+        badge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-red-500/20 text-red-400';
+        closed.classList.remove('hidden');
+        open.classList.add('hidden');
+      }
+    }
+
+    document.getElementById('orderBtn').addEventListener('click', async () => {
+      const name = document.getElementById('buyerName').value.trim();
+      const phone = document.getElementById('buyerPhone').value.trim();
+      const message = document.getElementById('buyerMessage').value.trim();
+      const exampleLink = document.getElementById('exampleLink').value.trim();
+      const mediaInput = document.getElementById('exampleMedia');
+      const mediaFiles = mediaInput && mediaInput.files ? Array.from(mediaInput.files) : [];
+
+      // ——— Validasi wajib ———
+      // 1) Tipe jasa
+      if (!selectedType) {
+        showToast('Please choose a service type first', 'error');
+        return;
+      }
+      // 2) Name pembeli
+      if (!name) {
+        showToast('Buyer name is required', 'error');
+        document.getElementById('buyerName').focus();
+        return;
+      }
+      // 3) No. WA pembeli
+      if (!phone) {
+        showToast('Buyer WhatsApp number is required', 'error');
+        document.getElementById('buyerPhone').focus();
+        return;
+      }
+      const phoneDigits = phone.replace(/\D/g, '');
+      if (phoneDigits.length < 10 || phoneDigits.length > 15) {
+        showToast('Invalid WhatsApp number', 'error');
+        document.getElementById('buyerPhone').focus();
+        return;
+      }
+      // 4) Media referensi wajib: minimal 1 (link ATAU foto/video)
+      if (!exampleLink && mediaFiles.length === 0) {
+        showToast('Wajib kasih referensi: link ATAU upload foto/video', 'error');
+        document.getElementById('exampleLink').focus();
+        return;
+      }
+      if (exampleLink && !/^https?:\/\//i.test(exampleLink)) {
+        showToast('Reference link must start with http:// or https://', 'error');
+        document.getElementById('exampleLink').focus();
+        return;
+      }
+      // Limit mirip bot: foto≤5 video≤3
+      let nPhoto = 0, nVideo = 0;
+      mediaFiles.forEach(function(f) {
+        if ((f.type || '').startsWith('video/')) nVideo++;
+        else nPhoto++;
+      });
+      if (nPhoto > 5) {
+        showToast('Maksimal 5 foto referensi', 'error');
+        return;
+      }
+      if (nVideo > 3) {
+        showToast('Maksimal 3 video referensi', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('orderBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> Memproses...';
+
+      // Create order first
+      const order = await SWCommission.addOrder({
+        slug: PUBLIC_USER,
+        typeId: selectedType.id,
+        typeName: selectedType.name,
+        price: selectedType.price,
+        buyerName: name,
+        buyerPhone: phone,
+        message,
+        exampleLink: exampleLink || null,
+        exampleMedia: mediaFiles.length ? mediaFiles.map(function(f){ return f.name; }).join(', ') : null,
+        exampleMediaCount: { photos: nPhoto, videos: nVideo, links: exampleLink ? 1 : 0 }
+      });
+
+      // Trigger WA notification (async — bisa gagal → tampil card session)
+      let waResult = { success: false };
+      try {
+        waResult = await SWCommission.sendWANotification(order);
+      } catch (e) {
+        waResult = {
+          success: false,
+          reason: 'exception',
+          error: e.message || 'Failed to send notification',
+          card: SWCommission.buildOrderCard(order),
+          example: SWCommission.ORDER_NOTIFY_EXAMPLE
+        };
+      }
+
+      if (!waResult.success) {
+        // Tampilkan card session + contoh
+        const modal = document.getElementById('orderCardModal');
+        document.getElementById('orderCardReason').textContent =
+          waResult.error || waResult.reason || 'Notif WA gagal';
+        document.getElementById('orderCardBody').textContent =
+          waResult.card || SWCommission.buildOrderCard(order);
+        document.getElementById('orderCardExample').textContent =
+          JSON.stringify(waResult.example || SWCommission.ORDER_NOTIFY_EXAMPLE, null, 2);
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        showToast('Order saved · WhatsApp notification failed (see card)', 'error');
+      } else {
+        showToast('Order saved · WA notification sent');
+      }
+
+      // Payment via shared module
+      try {
+        await createPayment(order.id, selectedType.price);
+        if (waResult.success) showToast('Scan the QR to pay.');
+      } catch (e) {
+        showToast('Order saved, payment fallback active', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Order now';
+      }
+    });
+
+
+    (function(){
+      var user = typeof PUBLIC_USER !== 'undefined' ? PUBLIC_USER : TraktiRieRouter.getUsernameFromUrl('');
+      var h = document.getElementById('creatorHandle');
+      if (h) h.textContent = '@' + user;
+      var nav = document.getElementById('catNav');
+      if (nav && window.TraktiRieRouter) {
+        (async function(){
+          var lbCfg = null;
+          try { lbCfg = await TraktiRieTheme.getLinkBioConfig(user); } catch (e) {}
+          TraktiRieRouter.renderCatNav(nav, user, 'commission', lbCfg);
+        })();
+      }
+    })();
+
+
+    (function(){
+      var copyBtn = document.getElementById('orderCardCopy');
+      var closeBtn = document.getElementById('orderCardClose');
+      if (copyBtn) copyBtn.addEventListener('click', function(){
+        var t = document.getElementById('orderCardBody').textContent;
+        if (navigator.clipboard) navigator.clipboard.writeText(t).then(function(){ showToast('Card disalin'); });
+        else showToast('Copy manually from the box', 'error');
+      });
+      if (closeBtn) closeBtn.addEventListener('click', function(){
+        var m = document.getElementById('orderCardModal');
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      });
+    })();
+
+    renderPage();
+  </script>
+  <!-- catatan: renderPage() sekarang async (fetch ke /api/commission); dipanggil fire-and-forget di sini karena tidak ada state lain yang butuh menunggu hasilnya lebih dulu -->
+</body>
+</html>

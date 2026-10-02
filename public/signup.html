@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="notranslate" translate="no" lang="en">
+<head>
+  <meta name="google" content="notranslate">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TraktiRie — Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#6b5b95',600:'#4c2f85',700:'#2d1b54',800:'#120c22',900:'#0c0818',950:'#05030c' },
+            sky: { 400:'#c084fc',500:'#a855f7',600:'#7c3aed',900:'#3b1f6b' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05030c">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
+    }
+  </script>
+  <!-- Security -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <!-- EmailJS (optional, if provider = 'emailjs' di security-config.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Auth SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-slate-950 text-white font-sans antialiased min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <a href="/" class="inline-flex items-center gap-2 mb-6">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center font-bold">T</div>
+        <span class="text-xl font-bold">Trakti<span class="text-sky-400">Rie</span></span>
+      </a>
+      <h1 class="text-2xl font-bold">Create Account</h1>
+      <p class="text-slate-400 text-sm mt-2">Selamat datang di TraktiRie</p>
+    </div>
+
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <button type="button" data-provider="google" title="Google" aria-label="Google" class="oauth-btn w-12 h-12 rounded-2xl bg-white flex items-center justify-center hover:scale-105 transition"><svg class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></button>
+      <button type="button" data-provider="github" title="GitHub" aria-label="GitHub" class="oauth-btn w-12 h-12 rounded-2xl bg-[#24292f] border border-white/10 flex items-center justify-center hover:scale-105 transition"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></button>
+      <button type="button" data-provider="x" title="X" aria-label="X" class="oauth-btn w-12 h-12 rounded-2xl bg-black border border-white/10 flex items-center justify-center hover:scale-105 transition"><svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
+      <button type="button" data-provider="tiktok" title="TikTok (not supported yet)" aria-label="TikTok not supported yet" class="oauth-btn w-12 h-12 rounded-2xl bg-black border border-white/10 flex items-center justify-center opacity-40 cursor-not-allowed"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.7a8.18 8.18 0 004.77 1.52V6.84a4.84 4.84 0 01-1.3-.15z"/></svg></button>
+    </div>
+    <div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+      <div class="flex-1 h-px bg-white/10"></div><span>or sign up with email</span><div class="flex-1 h-px bg-white/10"></div>
+    </div>
+
+    <!-- STEP 1: Form data + security check -->
+    <form id="signupForm" class="glass rounded-3xl p-6 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">@</span>
+          <input type="text" id="username" required placeholder="your_username" class="w-full pl-8 pr-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+        <input type="email" id="email" required placeholder="email@example.com" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+        <input type="password" id="password" required minlength="6" placeholder="At least 6 characters" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none">
+      </div>
+      <!-- Security -->
+      <div id="turnstile-wrap" class="hidden flex justify-center">
+        <div id="turnstile-widget" class="cf-turnstile"></div>
+      </div>
+      <button type="submit" id="btnSendOtp" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold hover:opacity-90 transition mt-2">
+        Send Verification Code
+      </button>
+      <p class="text-center text-sm text-slate-400">Already have an account? <a href="/login" class="text-sky-400 hover:underline">Log in</a></p>
+    </form>
+
+    <!-- STEP 2: Input OTP (tersembunyi dulu) -->
+    <div id="otpStep" class="glass rounded-3xl p-6 space-y-4 hidden">
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sky-500/20 flex items-center justify-center text-2xl">✉️</div>
+        <h2 class="font-bold text-lg">Verify Email</h2>
+        <p class="text-sm text-slate-400 mt-1">6 digit code sent to <span id="otpEmailLabel" class="text-sky-400"></span></p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1.5">Verification code</label>
+        <input type="text" id="otpCode" inputmode="numeric" maxlength="8" placeholder="Enter code" autocomplete="one-time-code"
+          class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10 focus:border-sky-500 outline-none text-center text-xl tracking-[0.4em] font-mono">
+      </div>
+      <button type="button" id="btnVerifyOtp" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 font-semibold hover:opacity-90 transition">
+        Verify and Create Account
+      </button>
+      <div class="flex items-center justify-between text-sm">
+        <button type="button" id="btnResendOtp" class="text-sky-400 hover:underline">Resend</button>
+        <button type="button" id="btnBackForm" class="text-slate-400 hover:underline">← Change details</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/security-config.js"></script>
+  <script src="js/backend-config.js"></script>
+  <script src="js/backend-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async function () {
+      if (await SWAuth.isLoggedIn()) location.href = '/dashboard';
+    })();
+
+    var pendingSignup = null; // { username, email, password }
+
+    function toast(msg, type) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + (type || 'success') + ' show';
+      setTimeout(function () { t.classList.remove('show'); }, 3500);
+    }
+
+    function initTurnstile() {
+      if (!SWAuth.isTurnstileEnabled()) return;
+      var wrap = document.getElementById('turnstile-wrap');
+      wrap.classList.remove('hidden');
+      wrap.classList.add('flex');
+      var cfg = SWAuth.getSecurityConfig().turnstile;
+      var tryRender = function () {
+        if (typeof turnstile === 'undefined') {
+          setTimeout(tryRender, 200);
+          return;
+        }
+        turnstile.render('#turnstile-widget', {
+          sitekey: cfg.siteKey,
+          theme: cfg.theme || 'dark',
+          size: cfg.size || 'normal'
+        });
+      };
+      tryRender();
+    }
+    initTurnstile();
+
+    function showOtpStep(email) {
+      document.getElementById('signupForm').classList.add('hidden');
+      document.getElementById('otpStep').classList.remove('hidden');
+      document.getElementById('otpEmailLabel').textContent = email;
+      document.getElementById('otpCode').value = '';
+      document.getElementById('otpCode').focus();
+
+    }
+
+    function showFormStep() {
+      document.getElementById('otpStep').classList.add('hidden');
+      document.getElementById('signupForm').classList.remove('hidden');
+      
+      SWAuth.resetTurnstile();
+    }
+
+    // Step 1: validasi + kirim OTP
+    document.getElementById('signupForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var username = document.getElementById('username').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+
+      var token = SWAuth.getTurnstileToken();
+      if (SWAuth.isTurnstileEnabled() && !token) {
+        toast('Complete security verification first.', 'error');
+        return;
+      }
+      if (!username || username.length < 3) { toast('Username minimum 3 characters.', 'error'); return; }
+      if (!/^[a-zA-Z0-9_]+$/.test(username)) { toast('Username only letters, numbers, underscore.', 'error'); return; }
+      if (!email || !email.includes('@')) { toast('Invalid email.', 'error'); return; }
+      if (!password || password.length < 6) { toast('Password must be at least 6 characters.', 'error'); return; }
+
+      var btn = document.getElementById('btnSendOtp');
+      btn.disabled = true;
+      btn.textContent = 'Checking...';
+
+      var existing = await SWAuth.getProfileByUsername(username);
+      if (existing) {
+        toast('Username is already in use.', 'error');
+        btn.disabled = false; btn.textContent = 'Send Verification Code';
+        return;
+      }
+
+      pendingSignup = { username: username, email: email, password: password };
+      btn.textContent = 'Sending...';
+
+      try {
+        var result = await SWAuth.sendEmailOTP(email, username);
+        if (!result.success) {
+          toast(result.message || 'Failed to send code', 'error');
+          SWAuth.resetTurnstile();
+          return;
+        }
+        if (result.skip) {
+          var reg = await SWAuth.signupVerified(pendingSignup);
+          if (!reg.success) { toast(reg.message || 'Failed', 'error'); return; }
+          toast('Account created!');
+          setTimeout(function () { location.href = '/dashboard'; }, 600);
+          return;
+        }
+        toast('Verification code sent to your email');
+        showOtpStep(email);
+      } catch (err) {
+        console.error(err);
+        toast('Failed to send code. Try again.', 'error');
+        SWAuth.resetTurnstile();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Verification Code';
+      }
+    });
+
+    // Step 2: verifikasi OTP → buat akun
+    document.getElementById('btnVerifyOtp').addEventListener('click', async function () {
+      if (!pendingSignup) { showFormStep(); return; }
+      var code = document.getElementById('otpCode').value.trim();
+      if (!code) { toast('Enter the verification code.', 'error'); return; }
+
+      var check = SWAuth.verifyEmailOTP(pendingSignup.email, code);
+      if (!check.success) { toast(check.message || 'Incorrect code', 'error'); return; }
+
+      var btn = document.getElementById('btnVerifyOtp');
+      btn.disabled = true;
+      btn.textContent = 'Create an account...';
+      var result = await SWAuth.signupVerified(pendingSignup);
+      btn.disabled = false;
+      btn.textContent = 'Verify and Create Account';
+      if (!result.success) { toast(result.message || 'Failed to create account', 'error'); return; }
+      toast('Verified email! Account created.');
+      setTimeout(function () { location.href = '/dashboard'; }, 700);
+    });
+
+    // Send ulang
+    document.getElementById('btnResendOtp').addEventListener('click', async function () {
+      if (!pendingSignup) return;
+      var btn = document.getElementById('btnResendOtp');
+      btn.disabled = true;
+      btn.textContent = 'Send...';
+      try {
+        var result = await SWAuth.sendEmailOTP(pendingSignup.email, pendingSignup.username);
+        if (!result.success) {
+          toast(result.message || 'failed', 'error');
+        } else {
+          toast('New code sent');
+
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Resend';
+      }
+    });
+
+    document.getElementById('btnBackForm').addEventListener('click', function () {
+      SWAuth.clearPendingOTP();
+      pendingSignup = null;
+      showFormStep();
+    });
+
+    document.getElementById('otpCode').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') document.getElementById('btnVerifyOtp').click();
+    });
+
+    // OAuth buttons
+    document.querySelectorAll('.oauth-btn').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        var provider = btn.getAttribute('data-provider');
+        var result = await SWAuth.loginWithSocial(provider);
+        if (!result.success) toast(result.message || 'Failed', 'error');
+      });
+    });
+  </script>
+</body>
+</html>
